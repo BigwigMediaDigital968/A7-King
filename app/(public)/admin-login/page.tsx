@@ -134,19 +134,19 @@ export default function LoginPage() {
                         <button
                             type="submit"
                             className="
-          w-full
-          bg-black
-          text-white
-          py-3
-          font-semibold
-          uppercase
-          tracking-wide
-          transition-all
-          hover:bg-[var(--color-secondary)]
-          hover:text-black
-          border-2
-          border-black
-        "
+                                w-full cursor-pointer
+                                bg-black
+                                text-white
+                                py-3
+                                font-semibold
+                                uppercase
+                                tracking-wide
+                                transition-all
+                                hover:bg-[var(--color-secondary)]
+                                hover:text-black
+                                border-2
+                                border-black
+                                "
                         >
                             Sign In
                         </button>
