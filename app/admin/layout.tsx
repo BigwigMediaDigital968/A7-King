@@ -57,19 +57,19 @@ export default function AdminLayout({ children }: LayoutProps) {
 
     const menuItems: MenuItem[] = [
         { name: 'Dashboard', icon: <LayoutDashboard size={20} />, href: '/admin' },
-        { name: 'Top Edit', icon: <Edit size={20} />, href: '/admin/top-edit' },
+        { name: 'Top Edit', icon: <Edit size={20} />, href: '/admin/#' },
         {
             name: 'Add Satta',
             icon: <PlusCircle size={20} />,
             subMenu: [
-                { name: 'All Satta Results', href: '/admin/satta/all' },
-                { name: 'Add New Satta', href: '/admin/satta/new' }
+                { name: 'All Satta Results', href: '/admin/#' },
+                { name: 'Add New Satta', href: '/admin/#' }
             ]
         },
-        { name: 'FAQ', icon: <HelpCircle size={20} />, href: '/admin/faq' },
-        { name: 'Edit Khaiwal Data', icon: <User size={20} />, href: '/admin/khaiwal' },
-        { name: 'Edit Contact Data', icon: <Contact size={20} />, href: '/admin/contact' },
-        { name: 'Yearly Chart', icon: <BarChart3 size={20} />, href: '/admin/charts' },
+        { name: 'FAQ', icon: <HelpCircle size={20} />, href: '/admin/#' },
+        { name: 'Edit Khaiwal Data', icon: <User size={20} />, href: '/admin/#' },
+        { name: 'Edit Contact Data', icon: <Contact size={20} />, href: '/admin/#' },
+        { name: 'Yearly Chart', icon: <BarChart3 size={20} />, href: '/admin/#' },
     ];
 
     const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>(() => {
