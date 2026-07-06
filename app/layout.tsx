@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AYSATTA OFFICIAL | Live Kalyan, Gali, Disawar, Milan Satta Results & Charts",
+  title: "A7 SATTA KING | Live Kalyan, Gali, Disawar, Milan Satta Results & Charts",
   description: "Get the fastest live Kalyan, Gali, Disawar, and Milan Satta results. View daily updates, real-time live tickers, official channel links, and historical chart data.",
   keywords: "satta, ay satta, satta king, live satta results, kalyan results, gali disawar result chart",
   icons: {

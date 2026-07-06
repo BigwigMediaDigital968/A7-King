@@ -96,37 +96,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen bg-white text-black font-sans selection:bg-[#ffd200] selection:text-black">
 
       {/* 1. NAV HEADER BAR (Black background, golden pills) */}
-      <nav className="w-full bg-black py-4 px-4 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-4 border-black">
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <a
-            href="#"
-            className="bg-white text-black font-extrabold text-xs sm:text-sm px-6 py-2 rounded-full border-2 border-black shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0px_#000000] transition-all duration-150"
-          >
-            A7 SATTA KING 🏠
-          </a>
-          <a
-            href="#charts"
-            className="bg-[#ffd200] text-black font-extrabold text-xs sm:text-sm px-6 py-2 rounded-full border-2 border-black shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0px_#000000] transition-all duration-150"
-          >
-            CHART
-          </a>
-          <a
-            href="#contact"
-            className="bg-[#ffd200] text-black font-extrabold text-xs sm:text-sm px-6 py-2 rounded-full border-2 border-black shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0px_#000000] transition-all duration-150"
-          >
-            CONTACT
-          </a>
-          <a
-            href="#login"
-            className="bg-[#ffd200] text-black font-extrabold text-xs sm:text-sm px-6 py-2 rounded-full border-2 border-black shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0px_#000000] transition-all duration-150"
-          >
-            LOGIN
-          </a>
-        </div>
-        <div className="text-white text-[10px] sm:text-xs text-center md:text-right max-w-lg md:self-end font-medium opacity-90">
-          A7 SATTA KING official website welcomes you. Get informed about satta king's history, rules, and valuable winning news daily.
-        </div>
-      </nav>
+      
 
       {/* 2. MAIN BRAND HEADER (Yellow background, big title) */}
       <header className="w-full bg-[#ffd200] border-b-4 border-black py-8 text-center">
@@ -611,33 +581,6 @@ export default function Home() {
         </section>
 
       </main>
-
-      {/* 11. FOOTER (Black background, yellow text links) */}
-      <footer className="w-full bg-black py-10 px-4 mt-12 border-t-4 border-black text-center text-white">
-        <div className="max-w-7xl mx-auto flex flex-col items-center gap-6">
-          <div className="flex justify-center gap-6 text-xs sm:text-sm font-black uppercase">
-            <a
-              href="#privacy"
-              className="text-[#ffd200] hover:text-[#ffe033] underline"
-            >
-              Privacy Policy
-            </a>
-            <a
-              href="#terms"
-              className="text-[#ffd200] hover:text-[#ffe033] underline"
-            >
-              Terms & Conditions
-            </a>
-          </div>
-          <div className="text-[10px] sm:text-xs text-neutral-400 max-w-2xl leading-relaxed">
-            Disclaimer: A7 SATTA KING OFFICIAL is an informational directory service. We do not operate gambling activities. Matka is subject to local state legislation regulations.
-          </div>
-          <div className="text-[10px] sm:text-xs text-neutral-500 font-bold border-t border-neutral-900 w-full pt-4">
-            © 2026 A7 SATTA KING OFFICIAL. All Rights Reserved.
-          </div>
-        </div>
-      </footer>
-
       {/* 12. FLOATING BOTTOM RIGHT REFRESH BUTTON */}
       <button
         onClick={handleRefresh}
