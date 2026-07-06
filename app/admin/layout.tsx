@@ -97,7 +97,7 @@ export default function AdminLayout({ children }: LayoutProps) {
 
         window.localStorage.removeItem('isAdmin'); // Clear admin status
         // Handle your actual logout logic here (clear cookies/tokens)
-        router.push('/login');
+        router.push('/admin-login');
     };
 
     return (
