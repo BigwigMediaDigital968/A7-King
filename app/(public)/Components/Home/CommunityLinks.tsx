@@ -4,7 +4,7 @@ import { FaTelegramPlane, FaWhatsapp } from "react-icons/fa";
 export default function CommunityLinks() {
   return (
     <div className="w-full py-2 flex flex-col gap-4 font-sans select-none">
-      <div className="w-full mx-auto flex flex-col gap-4">
+      <div className="w-full mx-auto flex flex-col gap-2">
         
         {/* TELEGRAM ROW */}
         <div className="w-full bg-[#ffd200] border border-dashed border-red-500  py-6 px-4 text-center flex flex-col items-center justify-center gap-3">

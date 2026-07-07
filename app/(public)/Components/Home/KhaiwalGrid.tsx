@@ -23,7 +23,7 @@ export default function KhaiwalGrid() {
   const timingsData4 = timings;
 
   return (
-    <div className="w-full py-8 px-4 font-sans select-none">
+    <div className="w-full py-4 px-4 font-sans select-none">
       <div className="w-full max-w-8xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-start">
 
         {/* COLUMN 1: AJAY BHAI KHAIWAL */}

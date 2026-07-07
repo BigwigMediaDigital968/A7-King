@@ -10,7 +10,7 @@ export default function LiveStatus({ currentTime }: { currentTime: string }) {
                         हा भाई यही आती हे सबसे पहले खबर रूको और देखो
                     </h2>
                     <div>
-                        <div className="hidden md:block text-3xl sm:text-4xl font-bold tracking-widest text-white mt-2 uppercase">
+                        <div className="hidden md:block text-2xl sm:text-3xl font-bold tracking-widest text-white mt-2 uppercase">
                             <div className="">
                                 delhi bazar
                             </div>
@@ -19,7 +19,7 @@ export default function LiveStatus({ currentTime }: { currentTime: string }) {
                             </div>
 
                         </div>
-                        <div className="hidden md:block text-3xl sm:text-4xl font-bold tracking-widest text-white mt-6 uppercase">
+                        <div className="hidden md:block text-2xl sm:text-3xl font-bold tracking-widest text-white mt-6 uppercase">
                             <div className="">
                                 gwalior
                             </div>
@@ -28,7 +28,7 @@ export default function LiveStatus({ currentTime }: { currentTime: string }) {
                             </div>
 
                         </div>
-                        <div className="text-3xl sm:text-4xl font-bold tracking-widest text-white mt-6 uppercase">
+                        <div className="text-2xl sm:text-3xl font-bold tracking-widest text-white mt-6 uppercase">
                             <div className="">
                                 AGRA
                             </div>
@@ -44,7 +44,7 @@ export default function LiveStatus({ currentTime }: { currentTime: string }) {
             </section>
 
             {/* 4. DISAWER RESULT PANEL (Yellow background) */}
-            <section className="w-full bg-[#ffd200] border-b-4 border-black py-8 text-center text-black">
+            <section className="w-full bg-[#ffd200]  py-8 text-center text-black">
                 <div className="max-w-md mx-auto flex flex-col items-center">
                     <h3 className="text-3xl font-semibold tracking-tight">DISAWER</h3>
                     <span className="text-base font-bold text-black/80 mt-1 uppercase">5:15 AM</span>

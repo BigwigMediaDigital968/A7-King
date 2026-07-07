@@ -3,12 +3,16 @@ import React from "react";
 
 export default function Navbar() {
   return (
+    <>
+    
+    
+   
     <nav className="w-full bg-black py-4 gap-4 border-b-4 border-black">
         <div className="w-full max-w-8xl px-2 py-4 sm:px-6 grid grid-cols-4 mx-auto items-center justify-center gap-x-2 sm:gap-x-14 gap-y-4">
         
         {/* Brand/Logo Pill Button */}
         <Link
-          href="#"
+          href="/"
           className="bg-white text-black w-full font-semibold text-[10px] sm:text-sm px-2 py-2 sm:px-9 sm:py-2.5 rounded-full border-2 border-black sm:shadow-[2px_2px_0px_#ffffff] hover:sm:shadow-[2px_2px_0px_#FFD200] transition-all duration-150 tracking-wider text-nowrap text-center"
         >
           A7SATTA 🏠
@@ -16,7 +20,7 @@ export default function Navbar() {
 
         {/* Navigation Link: CHART */}
         <Link
-          href="#charts"
+          href="/chart"
           className="bg-[#FFD200] text-black font-semibold text-[10px] sm:text-sm px-4 py-2 sm:px-9 sm:py-2.5 rounded-full border-2 border-black sm:shadow-[2px_2px_0px_#ffffff] hover:sm:shadow-[2px_2px_0px_#FFD200] transition-all duration-150 tracking-wider text-center"
         >
           CHART
@@ -51,6 +55,25 @@ export default function Navbar() {
         </div>
       </div>
       </nav>
-
+ {/* 2. MAIN BRAND HEADER (Yellow background, big title) */}
+          <header className="w-full bg-[#ffd200] border-b-4 border-black py-8 text-center select-none overflow-hidden">
+            {/* Custom Keyframes Style Injection */}
+            <style>{`
+            @keyframes strictOpacityFade {
+              0%, 100% { opacity: 0; }
+              50% { opacity: 1; }
+            }
+            .animate-custom-fade {
+              animation: strictOpacityFade 2s ease-in-out infinite;
+            }
+          `}</style>
+    
+    <Link href={"/"}>
+    <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tighter text-black uppercase animate-custom-fade">
+              A7 SATTA KING OFFICIAL
+            </h1>
+    </Link>
+            
+          </header></>
   );
 }

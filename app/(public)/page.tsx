@@ -103,23 +103,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white text-black font-sans selection:bg-[#ffd200] selection:text-black">
-      {/* 2. MAIN BRAND HEADER (Yellow background, big title) */}
-      <header className="w-full bg-[#ffd200] border-b-4 border-black py-8 text-center select-none overflow-hidden">
-        {/* Custom Keyframes Style Injection */}
-        <style>{`
-        @keyframes strictOpacityFade {
-          0%, 100% { opacity: 0; }
-          50% { opacity: 1; }
-        }
-        .animate-custom-fade {
-          animation: strictOpacityFade 2s ease-in-out infinite;
-        }
-      `}</style>
-
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tighter text-black uppercase animate-custom-fade">
-          A7 SATTA KING OFFICIAL
-        </h1>
-      </header>
+      
 
       {/* 3. LIVE STATUS BLOCK (Black background) */}
       <LiveStatus currentTime={currentTime} />
