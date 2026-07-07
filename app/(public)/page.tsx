@@ -9,6 +9,7 @@ import { FaTelegramPlane, FaWhatsapp } from "react-icons/fa";
 import FAQSection from "./Components/Home/FAQSection";
 import Blogs from "./Components/Home/Blogs";
 import SattaChartSearch from "./Components/Home/SattaChartSearch";
+import WeeklyResultsSection from "./Components/Home/WeeklyResultsSection";
 
 // Specific local games list
 const TABLE_1_GAMES = [
@@ -208,110 +209,7 @@ export default function Home() {
           </div>
           <SattaChartSearch/>
 
-          {/* TABLE 1 SECTION */}
-          <div className="flex flex-col border-2 border-black overflow-hidden">
-
-            {/* Header banner */}
-            <div className="w-full bg-gradient-to-b from-orange-400 to-[#ffd200] border-b-2 border-black py-4 text-center">
-              <h3 className="text-xl sm:text-3xl font-semibold text-black tracking-wider uppercase">
-                SATTA RESULT CHART {selectedMonth.toUpperCase()} {selectedYear}
-              </h3>
-            </div>
-
-            {/* Scrollable table container */}
-            <div className="overflow-x-auto custom-scrollbar">
-              <table className="w-full text-left border-collapse min-w-[1200px]">
-                <thead>
-                  <tr className="bg-[#ffd200] text-black border border-black text-xs font-extrabold uppercase">
-                    <th className="py-3 px-4 w-32 sticky left-0 z-20 bg-[#ffd200] border-r-2 border-black text-center">Date</th>
-                    {TABLE_1_GAMES.map((game) => (
-                      <th key={game} className="py-3 px-2 text-center border-r border-black/40 text-[10px] w-24">
-                        {game}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-black/30 text-xs font-bold bg-white text-black">
-                  {Array.from({ length: 4 }).map((_, dayIdx) => {
-                    const dayStr = `${(dayIdx + 1).toString().padStart(2, "0")}-07`;
-                    return (
-                      <tr key={dayIdx} className="hover:bg-yellow-50 transition-colors border-b border-black/40">
-                        <td className="py-3 px-4 font-black w-32 sticky left-0 z-20 bg-[#ffd200] border-r-2 border-black text-center shadow-[2px_0_5px_rgba(0,0,0,0.1)] font-mono">
-                          {dayStr}
-                        </td>
-                        {table1Data
-                          .filter((row) => row.game.toLowerCase().includes(searchQuery.toLowerCase()))
-                          .map((row, gameIdx) => {
-                            const resVal = row.results[dayIdx] || "-";
-                            return (
-                              <td
-                                key={gameIdx}
-                                className="py-3 px-2 text-center border-r border-black/25 font-mono text-sm"
-                              >
-                                {resVal === "-" ? (
-                                  <span className="text-black/35 font-bold">-</span>
-                                ) : (
-                                  <span className="font-extrabold">{resVal}</span>
-                                )}
-                              </td>
-                            );
-                          })}
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* TABLE 2 SECTION */}
-          <div className="flex flex-col gap-4 border-2 border-black overflow-hidden">
-
-            {/* Scrollable table container */}
-            <div className="overflow-x-auto custom-scrollbar">
-              <table className="w-full text-left border-collapse min-w-[1200px]">
-                <thead>
-                  <tr className="bg-[#ffd200] text-black border-b-2 border-black text-xs font-extrabold uppercase">
-                    <th className="py-3 px-4 w-32 sticky left-0 z-20 bg-[#ffd200] border-r-2 border-black text-center">Date</th>
-                    {TABLE_2_GAMES.map((game) => (
-                      <th key={game} className="py-3 px-2 text-center border-r border-black/40 text-[10px] w-24">
-                        {game}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-black/30 text-xs font-bold bg-white text-black">
-                  {Array.from({ length: 4 }).map((_, dayIdx) => {
-                    const dayStr = `${(dayIdx + 1).toString().padStart(2, "0")}-07`;
-                    return (
-                      <tr key={dayIdx} className="hover:bg-yellow-50 transition-colors border-b border-black/40">
-                        <td className="py-3 px-4 font-black w-32 sticky left-0 z-20 bg-yellow-100 border-r-2 border-black text-center shadow-[2px_0_5px_rgba(0,0,0,0.1)] font-mono">
-                          {dayStr}
-                        </td>
-                        {table2Data
-                          .filter((row) => row.game.toLowerCase().includes(searchQuery.toLowerCase()))
-                          .map((row, gameIdx) => {
-                            const resVal = row.results[dayIdx] || "-";
-                            return (
-                              <td
-                                key={gameIdx}
-                                className="py-3 px-2 text-center border-r border-black/25 font-mono text-sm"
-                              >
-                                {resVal === "-" ? (
-                                  <span className="text-black/35 font-bold">-</span>
-                                ) : (
-                                  <span className="font-extrabold">{resVal}</span>
-                                )}
-                              </td>
-                            );
-                          })}
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <WeeklyResultsSection/>
 
 
         </section>
