@@ -1,35 +1,55 @@
+import Link from "next/link";
+import React from "react";
+
 export default function Navbar() {
   return (
-    <nav className="w-full bg-black py-4 px-4 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-4 border-black">
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <a
-            href="#"
-            className="bg-white text-black font-extrabold text-xs sm:text-sm px-6 py-2 rounded-full border-2 border-black shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0px_#000000] transition-all duration-150"
-          >
-            A7 SATTA KING 🏠
-          </a>
-          <a
-            href="#charts"
-            className="bg-[#ffd200] text-black font-extrabold text-xs sm:text-sm px-6 py-2 rounded-full border-2 border-black shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0px_#000000] transition-all duration-150"
-          >
-            CHART
-          </a>
-          <a
-            href="#contact"
-            className="bg-[#ffd200] text-black font-extrabold text-xs sm:text-sm px-6 py-2 rounded-full border-2 border-black shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0px_#000000] transition-all duration-150"
-          >
-            CONTACT
-          </a>
-          <a
-            href="#login"
-            className="bg-[#ffd200] text-black font-extrabold text-xs sm:text-sm px-6 py-2 rounded-full border-2 border-black shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0px_#000000] transition-all duration-150"
-          >
-            LOGIN
-          </a>
+    <nav className="w-full bg-black py-4 gap-4 border-b-4 border-black">
+        <div className="w-full max-w-8xl px-2 py-4 sm:px-6 grid grid-cols-4 mx-auto items-center justify-center gap-x-2 sm:gap-x-14 gap-y-4">
+        
+        {/* Brand/Logo Pill Button */}
+        <Link
+          href="#"
+          className="bg-white text-black w-full font-semibold text-[10px] sm:text-sm px-2 py-2 sm:px-9 sm:py-2.5 rounded-full border-2 border-black sm:shadow-[2px_2px_0px_#ffffff] hover:sm:shadow-[2px_2px_0px_#FFD200] transition-all duration-150 tracking-wider text-nowrap text-center"
+        >
+          A7SATTA 🏠
+        </Link>
+
+        {/* Navigation Link: CHART */}
+        <Link
+          href="#charts"
+          className="bg-[#FFD200] text-black font-semibold text-[10px] sm:text-sm px-4 py-2 sm:px-9 sm:py-2.5 rounded-full border-2 border-black sm:shadow-[2px_2px_0px_#ffffff] hover:sm:shadow-[2px_2px_0px_#FFD200] transition-all duration-150 tracking-wider text-center"
+        >
+          CHART
+        </Link>
+
+        {/* Navigation Link: CONTACT */}
+        <Link
+          href="#contact"
+          className="bg-[#FFD200] text-black font-semibold text-[10px] sm:text-sm px-4 py-2 sm:px-9 sm:py-2.5 rounded-full border-2 border-black sm:shadow-[2px_2px_0px_#ffffff] hover:sm:shadow-[2px_2px_0px_#FFD200] transition-all duration-150 tracking-wider text-center"
+        >
+          CONTACT
+        </Link>
+
+        {/* Navigation Link: LOGIN */}
+        <Link
+          href="#login"
+          className="bg-[#FFD200] text-black font-semibold text-[10px]  sm:text-sm px-4 py-2 sm:px-9 sm:py-2.5 rounded-full border-2 border-black sm:shadow-[2px_2px_0px_#ffffff] hover:sm:shadow-[2px_2px_0px_#FFD200] transition-all duration-150 tracking-wider text-center"
+        >
+          LOGIN
+        </Link>
+
+      </div>
+        <div className="w-full bg-gradient-to-r border-t  overflow-hidden shadow-inner">
+        {/* Marquee Ticker Banner Track */}
+        <div className="w-full bg-gradient-to-r py-1.5 border-t overflow-hidden shadow-inner">
+          {React.createElement('marquee', {
+            behavior: 'scroll',
+            direction: 'left',
+            scrollamount: '5',
+            className: 'text-[#140E05] font-bold text-xs sm:text-sm tracking-wide flex items-center text-white',
+          }, "✨ Welcome to A7 SATTA KING Official Website! Stay updated with historical data insights, game rule books, and real-time live winning news updates around the clock. 🚀")}
         </div>
-        <div className="text-white text-[10px] sm:text-xs text-center md:text-right max-w-lg md:self-end font-medium opacity-90">
-          A7 SATTA KING official website welcomes you. Get informed about satta king's history, rules, and valuable winning news daily.
-        </div>
+      </div>
       </nav>
 
   );
