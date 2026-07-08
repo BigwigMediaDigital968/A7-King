@@ -23,7 +23,7 @@ export default function KhaiwalGrid() {
   const timingsData4 = timings;
 
   return (
-    <div className="w-full py-4 px-4 font-sans select-none">
+    <div className="w-full py-4 font-sans select-none">
       <div className="w-full max-w-8xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-start">
 
         {/* COLUMN 1: AJAY BHAI KHAIWAL */}
@@ -147,16 +147,11 @@ function WhatsAppButton() {
       href="https://wa.me/your_number"
       target="_blank"
       rel="noopener noreferrer"
-      className="flex items-center gap-2 bg-[#00c600] text-white font-black px-5 py-2 rounded-full border-2 border-white shadow-[2px_2px_0px_#000000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_#000000] transition-all duration-150"
+      className="flex items-center gap-4 text-white "
     >
-      <div className="bg-white rounded-full p-0.5 flex items-center justify-center text-[#00c600]">
-        <FaWhatsapp className="w-8 h-8 text-[#00c600]" />
+      {/* WhatsApp Pill Icon Wrapper */}
+      <img src="/whatsapp-btn.png" alt="" className="h-[65px] text-[#00a2ed]" />
 
-      </div>
-      <div className="flex flex-col items-start leading-none">
-        <span className="text-xs font-black tracking-wide">WhatsApp</span>
-        <span className="text-[8px] font-bold opacity-90">Click to chat</span>
-      </div>
     </a>
   );
 }

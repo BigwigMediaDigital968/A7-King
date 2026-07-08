@@ -29,7 +29,7 @@ export default function SattaChartSearch() {
             <select
               value={selectedGame}
               onChange={(e) => setSelectedGame(e.target.value)}
-              className="w-full bg-white text-black font-black text-sm sm:text-base px-4 py-2 rounded border-2 border-[#FFD200] outline-none appearance-none cursor-pointer tracking-wide"
+              className="w-full bg-white text-black font-semibold text-sm sm:text-base px-4 py-2 rounded border-2 border-[#FFD200] outline-none appearance-none cursor-pointer tracking-wide"
               style={{
                 backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='black'><path d='M7 10l5 5 5-5z'/></svg>")`,
                 backgroundRepeat: "no-repeat",
@@ -51,7 +51,7 @@ export default function SattaChartSearch() {
             <select
               value={selectedYear}
               onChange={(e) => setSelectedYear(e.target.value)}
-              className="w-full bg-white text-black font-black text-sm sm:text-base px-4 py-2 rounded border-2 border-[#FFD200] outline-none appearance-none cursor-pointer tracking-wide"
+              className="w-full bg-white text-black font-semibold text-sm sm:text-base px-4 py-2 rounded border-2 border-[#FFD200] outline-none appearance-none cursor-pointer tracking-wide"
               style={{
                 backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='black'><path d='M7 10l5 5 5-5z'/></svg>")`,
                 backgroundRepeat: "no-repeat",
@@ -69,7 +69,7 @@ export default function SattaChartSearch() {
           {/* Submission Trigger Action Button */}
           <button
             type="submit"
-            className="bg-[#FFD200] hover:bg-[#e6bd00] text-black font-black text-xs sm:text-sm px-5 py-3 rounded transition-colors duration-150 active:scale-98 cursor-pointer shadow-[0px_1px_2px_rgba(0,0,0,0.05)]"
+            className="bg-[#FFD200] hover:bg-[#e6bd00] text-black font-semibold text-xs sm:text-sm px-5 py-3 rounded transition-colors duration-150 active:scale-98 cursor-pointer shadow-[0px_1px_2px_rgba(0,0,0,0.05)]"
           >
             Check
           </button>

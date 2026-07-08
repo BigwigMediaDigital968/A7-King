@@ -127,6 +127,14 @@ export const getWeeklyResults = async (): Promise<{
       { game: "GWALIOR", results: ["07", "11", "56", "90", "44", "66", "19"] },
       { game: "DELHI BAZAR", results: ["57", "22", "18", "73", "91", "26", "33"] },
       { game: "DELHI MATKA", results: ["97", "54", "76", "88", "42", "15", "09"] },
+
+      { game: "GWALIOR", results: ["07", "11", "56", "90", "44", "66", "19"] },
+      { game: "DELHI BAZAR", results: ["57", "22", "18", "73", "91", "26", "33"] },
+      { game: "DELHI MATKA", results: ["97", "54", "76", "88", "42", "15", "09"] },
+       { game: "SADAR BAZAR", results: ["21", "45", "78", "12", "67", "34", "89"] },
+      { game: "GWALIOR", results: ["07", "11", "56", "90", "44", "66", "19"] },
+      { game: "DELHI BAZAR", results: ["57", "22", "18", "73", "91", "26", "33"] },
+      { game: "DELHI MATKA", results: ["97", "54", "76", "88", "42", "15", "09"] },
     ],
 
     table2: [
@@ -135,6 +143,13 @@ export const getWeeklyResults = async (): Promise<{
       { game: "ALWAR", results: ["23", "51", "80", "99", "61", "28", "74"] },
       { game: "GAZIABAD", results: ["54", "90", "37", "42", "16", "73", "85"] },
        { game: "SADAR BAZAR", results: ["21", "45", "78", "12", "67", "34", "89"] },
+      { game: "GWALIOR", results: ["07", "11", "56", "90", "44", "66", "19"] },
+      { game: "DELHI BAZAR", results: ["57", "22", "18", "73", "91", "26", "33"] },
+      { game: "DELHI MATKA", results: ["97", "54", "76", "88", "42", "15", "09"] },
+       { game: "SADAR BAZAR", results: ["21", "45", "78", "12", "67", "34", "89"] },
+      { game: "GWALIOR", results: ["07", "11", "56", "90", "44", "66", "19"] },
+      { game: "DELHI BAZAR", results: ["57", "22", "18", "73", "91", "26", "33"] },
+      { game: "DELHI MATKA", results: ["97", "54", "76", "88", "42", "15", "09"] },
       { game: "GWALIOR", results: ["07", "11", "56", "90", "44", "66", "19"] },
       { game: "DELHI BAZAR", results: ["57", "22", "18", "73", "91", "26", "33"] },
       { game: "DELHI MATKA", results: ["97", "54", "76", "88", "42", "15", "09"] },

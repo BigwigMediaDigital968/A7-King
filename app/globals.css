@@ -3,12 +3,14 @@
 :root {
   --background: #ffffff;
   --foreground: #000000;
-  --yellow: #ffd200;
+  --yellow: #ffd800;
 }
 
 @theme {
   --color-primary: #000000;
   --color-secondary: var(--yellow);
+   --container-8xl: 96rem; /* 1536px */
+
 }
 
 /* Custom Scrollbar for chart table */

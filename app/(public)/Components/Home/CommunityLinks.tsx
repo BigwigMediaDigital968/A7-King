@@ -15,16 +15,9 @@ export default function CommunityLinks() {
             href="https://t.me/your_channel"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-4 bg-[#00a2ed] text-white font-black text-xs sm:text-sm px-6 py-2 rounded-full border-2 border-white transition-all duration-150"
+            className="flex items-center gap-4 text-white font-black transition-all duration-150"
           >
-            {/* Telegram Pill Icon Wrapper */}
-            <div className="bg-white rounded-full p-0.5 flex items-center justify-center text-[#00a2ed]">
-              <FaTelegramPlane className="w-8 h-8 text-[#00a2ed]" />
-            </div>
-            <div className="flex flex-col items-start leading-none">
-              <span className="text-sm font-black tracking-wide">Telegram</span>
-              <span className="text-[9px] font-bold opacity-90">Click to connect</span>
-            </div>
+            <img src="/telegram-btn.png" alt="" className="h-[65px] text-[#00a2ed]" />
           </a>
         </div>
 
@@ -37,31 +30,25 @@ export default function CommunityLinks() {
             href="https://wa.me/your_number"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-4 bg-[#00c600] text-white font-black text-xs sm:text-sm px-6 py-2 rounded-full border-2 border-white shadow-[2px_2px_0px_#000000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_#000000] transition-all duration-150"
+            className="flex items-center gap-4 text-white "
           >
             {/* WhatsApp Pill Icon Wrapper */}
-            <div className="bg-white rounded-full p-0.5 flex items-center justify-center text-[#00c600]">
-            <FaWhatsapp className="w-8 h-8 text-[#00c600]" />
-            </div>
+                        <img src="/whatsapp-btn.png" alt="" className="h-[65px] text-[#00a2ed]" />
 
-             <div className="flex flex-col items-start leading-none">
-              <span className="text-sm font-black tracking-wide">WhatsApp</span>
-              <span className="text-[9px] font-bold opacity-90">Click to chat</span>
-            </div>
           </a>
         </div>
 
         {/* SHRI GANESH UPDATE TRACK */}
         <div className="w-full bg-[#ffd200] border border-dashed border-red-500 py-6 px-4 text-center">
           <p className="text-black font-semibold text-xs sm:text-sm md:text-base uppercase tracking-tight">
-            <a href="#shri-ganesh" className="underline hover:text-zinc-800">SHRI GANESH SATTA KING</a> RESULT IS UPDATED EVERYDAY AT <span className="font-bold">4:40 PM</span>.
+            <a href="#shri-ganesh" className="underline text-blue-900 hover:text-zinc-800">SHRI GANESH SATTA KING</a> RESULT IS UPDATED EVERYDAY AT <span className="font-bold">4:40 PM</span>.
           </p>
         </div>
 
         {/* SADAR BAZAR UPDATE TRACK */}
         <div className="w-full bg-[#ffd200] border border-dashed border-red-500 py-6 px-4 text-center">
           <p className="text-black font-semibold text-xs sm:text-sm md:text-base uppercase tracking-tight">
-            <a href="#sadar-bazar" className="underline hover:text-zinc-800">SADAR BAZAR SATTA KING 2025</a> CHART IS AVAILABLE ON A7SATTA.COM
+            <a href="#sadar-bazar" className="underline text-blue-900 hover:text-zinc-800">SADAR BAZAR SATTA KING 2025</a> CHART IS AVAILABLE ON A7SATTA.COM
           </p>
         </div>
 

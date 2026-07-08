@@ -40,14 +40,14 @@ export default function WeeklyResultTable({
         <table className="w-full text-left border-collapse min-w-[1200px]">
           <thead>
             <tr className="bg-[#ffd200] text-black border-b-2 border-black text-xs font-extrabold uppercase">
-              <th className="py-3 px-4 w-32 sticky left-0 z-20 bg-[#ffd200] border-r-2 border-black text-center">
+              <th className="py-3 px-4 min-w-[120px] left-0 z-20 bg-[#ffd200] border-r-2 border-black text-center">
                 Date
               </th>
 
-              {filteredGames.map((game) => (
+              {filteredGames.map((game, index) => (
                 <th
-                  key={game.game}
-                  className="py-3 px-2 text-center border-r border-black/40 text-[10px] w-24"
+                  key={game.game + index}
+                  className="py-3 px-2 text-center border-r border-black/40 text-xs min-w-[120px]"
                 >
                   {game.game}
                 </th>
@@ -66,7 +66,7 @@ export default function WeeklyResultTable({
                   key={dayIdx}
                   className="hover:bg-yellow-50 transition-colors border-b border-black/40"
                 >
-                  <td className="py-3 px-4 font-black w-32 sticky left-0 z-20 bg-[#ffd200] border-r-2 border-black text-center shadow-[2px_0_5px_rgba(0,0,0,0.1)] font-mono">
+                  <td className="py-3 px-4 font-black w-32 left-0 z-20 bg-[#ffd200] border-r-2 border-black text-center shadow-[2px_0_5px_rgba(0,0,0,0.1)] font-mono">
                     {dayStr}
                   </td>
 
@@ -76,7 +76,7 @@ export default function WeeklyResultTable({
                     return (
                       <td
                         key={`${row.game}-${dayIdx}`}
-                        className="py-3 px-2 text-center border-r border-black/25 font-mono text-sm"
+                        className="py-1 px-2 text-center border-r border-black/25 font-mono text-sm "
                       >
                         {value === "-" ? (
                           <span className="text-black/35 font-bold">-</span>

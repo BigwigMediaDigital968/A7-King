@@ -1,5 +1,6 @@
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import RefreshButton from "./Components/Global/RefreshButton";
 
 // app/admin/layout.tsx
 export default function Layout({
@@ -13,6 +14,7 @@ export default function Layout({
       <Navbar />
       <main>{children}</main>
       <Footer />
+      <RefreshButton/>
     </div>
   );
 }

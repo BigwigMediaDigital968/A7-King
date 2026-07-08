@@ -54,13 +54,13 @@ A7satta provides all kind of satta king results everyday.
             </div>
 
             {/* 3-Column Links Responsive Grid Container */}
-            <div className="max-w-[98%] mx-auto grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-2 px-2">
+            <div className="max-w-[98%] mx-auto grid grid-cols-1 md:grid-cols-3 gap-x-2 gap-y-2 px-2">
                 {charts.map((chart, idx) => (
                     <Link
                         key={idx}
                         href={`#${chart.name.toLowerCase().replace(/\s+/g, "-")}`}
                         className="
-        w-full py-3 px-4 rounded text-center font-bold text-xs sm:text-sm tracking-tight uppercase transition-all duration-150 border border-black/10
+        w-full py-3 px-4 rounded text-center font-semibold text-xs sm:text-sm tracking-tight uppercase transition-all duration-150 border border-black/10
         bg-[#FFD200] text-black
         shadow-[2px_2px_0px_rgba(250,250,250,1)]
         hover:bg-black hover:text-[#FFD200]

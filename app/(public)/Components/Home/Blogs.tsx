@@ -27,7 +27,7 @@ export default function Blogs() {
     return (
         <section className="flex flex-col gap-6 mt-4 bg-black/95">
             <div className="w-full bg-black border-b-4 border-black py-4 text-center text-white">
-                <h4 className="text-xl sm:text-2xl font-black uppercase tracking-widest">
+                <h4 className="text-lg sm:text-xl font-black uppercase tracking-widest pt-4">
                     A7 SATTA KING BLOG
                 </h4>
             </div>
@@ -38,18 +38,18 @@ export default function Blogs() {
                         Loading blogs...
                     </div>
                 ) : (
-                    <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 ">
+                    <div className="max-w-8xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 ">
                         {blogs.map((blog) => (
                             <div
                                 key={blog.id}
                                 className="border border-black bg-white flex flex-col transition-all"
                             >
-                                <div className="w-full aspect-[4/3] bg-slate-400 flex items-center justify-center text-slate-800 font-extrabold border-b-2 border-black p-4 text-center">
+                                <div className="w-full aspect-[4/3] bg-slate-500 flex items-center justify-center text-slate-800 font-extrabold border-b-2 border-black p-4 text-center">
                                     {blog.title}
                                 </div>
 
-                                <div className="bg-[#ffd200] p-4 flex-grow flex flex-col gap-2 text-black">
-                                    <h5 className="font-bold text-base uppercase leading-snug">
+                                <div className="bg-secondary p-6 flex-grow flex flex-col gap-2 text-black">
+                                    <h5 className="font-bold text-base capitalize leading-snug pt-2">
                                         {blog.title}
                                     </h5>
 

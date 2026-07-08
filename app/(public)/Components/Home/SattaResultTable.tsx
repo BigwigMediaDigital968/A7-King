@@ -23,7 +23,7 @@ export default function SattaResultTable() {
 
     return (
         <div>
-            <div className="w-full bg-white py-6 px-4 font-sans select-none flex justify-center">
+            <div className="w-full bg-white py-6 font-sans select-none flex justify-center">
                 <div className="w-full max-w-8xl border border-gray-400 overflow-hidden shadow-sm">
 
                     {/* TABLE HEADERS */}
@@ -40,16 +40,16 @@ export default function SattaResultTable() {
 
                                 {/* Column 1: Name & Timing */}
                                 <div className="bg-[#FFD200] py-3 px-2 flex flex-col justify-center items-center h-full border-r border-gray-300">
-                                    <span className="text-black font-bold text-lg sm:text-xl tracking-tight leading-tight">
+                                    <span className="text-black font-bold text-sm sm:text-xl tracking-tight leading-tight">
                                         {game.name}
                                     </span>
-                                    <span className="text-black font-bold text-lg sm:text-xl tracking-tight leading-tight mt-2">
+                                    <span className="text-black font-bold text-sm sm:text-xl tracking-tight leading-tight mt-2">
                                         {game.time}
                                     </span>
                                 </div>
 
                                 {/* Column 2: Yesterday's Result */}
-                                <div className="py-3 text-black font-bold text-lg sm:text-xl border-r border-gray-300 bg-white h-full flex items-center justify-center">
+                                <div className="py-3 text-black font-bold text-sm sm:text-xl border-r border-gray-300 bg-white h-full flex items-center justify-center">
                                     {game.yesterdayResult}
                                 </div>
 
@@ -76,7 +76,7 @@ export default function SattaResultTable() {
                     </div>
 
                 </div>
-            </div><div className="w-full bg-white py-6 px-4 font-sans select-none flex justify-center">
+            </div><div className="w-full bg-white py-6 font-sans select-none flex justify-center">
                 <div className="w-full max-w-8xl border border-gray-400 overflow-hidden shadow-sm">
 
                     {/* TABLE HEADERS */}
@@ -93,16 +93,16 @@ export default function SattaResultTable() {
 
                                 {/* Column 1: Name & Timing */}
                                 <div className="bg-[#FFD200] py-3 px-2 flex flex-col justify-center items-center h-full border-r border-gray-300">
-                                    <span className="text-black font-bold text-lg sm:text-xl tracking-tight leading-tight">
+                                    <span className="text-black font-bold text-sm sm:text-xl tracking-tight leading-tight">
                                         {game.name}
                                     </span>
-                                    <span className="text-black font-bold text-lg sm:text-xl tracking-tight leading-tight mt-2">
+                                    <span className="text-black font-bold text-sm sm:text-xl tracking-tight leading-tight mt-2">
                                         {game.time}
                                     </span>
                                 </div>
 
                                 {/* Column 2: Yesterday's Result */}
-                                <div className="py-3 text-black font-bold text-lg sm:text-xl border-r border-gray-300 bg-white h-full flex items-center justify-center">
+                                <div className="py-3 text-black font-bold text-sm sm:text-xl border-r border-gray-300 bg-white h-full flex items-center justify-center">
                                     {game.yesterdayResult}
                                 </div>
 

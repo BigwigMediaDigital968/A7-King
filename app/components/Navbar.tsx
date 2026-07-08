@@ -13,7 +13,7 @@ export default function Navbar() {
         {/* Brand/Logo Pill Button */}
         <Link
           href="/"
-          className="bg-white text-black w-full font-semibold text-[10px] sm:text-sm px-2 py-2 sm:px-9 sm:py-2.5 rounded-full border-2 border-black sm:shadow-[2px_2px_0px_#ffffff] hover:sm:shadow-[2px_2px_0px_#FFD200] transition-all duration-150 tracking-wider text-nowrap text-center"
+          className="bg-white text-black w-full font-semibold text-[10px] sm:text-sm px-2 py-2 sm:px-9 sm:py-2.5 rounded-full border border-black sm:shadow-[2px_2px_0px_#ffffff] hover:sm:shadow-[2px_2px_0px_#FFD200] transition-all duration-150 tracking-wider text-nowrap text-center"
         >
           A7SATTA 🏠
         </Link>
@@ -21,23 +21,23 @@ export default function Navbar() {
         {/* Navigation Link: CHART */}
         <Link
           href="/chart"
-          className="bg-[#FFD200] text-black font-semibold text-[10px] sm:text-sm px-4 py-2 sm:px-9 sm:py-2.5 rounded-full border-2 border-black sm:shadow-[2px_2px_0px_#ffffff] hover:sm:shadow-[2px_2px_0px_#FFD200] transition-all duration-150 tracking-wider text-center"
+          className="bg-[#ffd800] text-black font-semibold text-[10px] sm:text-sm px-4 py-2 sm:px-9 sm:py-2.5 rounded-full border border-black sm:shadow-[2px_2px_0px_#ffffff] hover:sm:shadow-[2px_2px_0px_#ffd800] transition-all duration-150 tracking-wider text-center"
         >
           CHART
         </Link>
 
         {/* Navigation Link: CONTACT */}
         <Link
-          href="#contact"
-          className="bg-[#FFD200] text-black font-semibold text-[10px] sm:text-sm px-4 py-2 sm:px-9 sm:py-2.5 rounded-full border-2 border-black sm:shadow-[2px_2px_0px_#ffffff] hover:sm:shadow-[2px_2px_0px_#FFD200] transition-all duration-150 tracking-wider text-center"
+          href="/contact"
+          className="bg-[#ffd800] text-black font-semibold text-[10px] sm:text-sm px-4 py-2 sm:px-9 sm:py-2.5 rounded-full border border-black sm:shadow-[2px_2px_0px_#ffffff] hover:sm:shadow-[2px_2px_0px_#ffd800] transition-all duration-150 tracking-wider text-center"
         >
           CONTACT
         </Link>
 
         {/* Navigation Link: LOGIN */}
         <Link
-          href="#login"
-          className="bg-[#FFD200] text-black font-semibold text-[10px]  sm:text-sm px-4 py-2 sm:px-9 sm:py-2.5 rounded-full border-2 border-black sm:shadow-[2px_2px_0px_#ffffff] hover:sm:shadow-[2px_2px_0px_#FFD200] transition-all duration-150 tracking-wider text-center"
+          href="/login"
+          className="bg-[#ffd800] text-black font-semibold text-[10px]  sm:text-sm px-4 py-2 sm:px-9 sm:py-2.5 rounded-full border border-black sm:shadow-[2px_2px_0px_#ffffff] hover:sm:shadow-[2px_2px_0px_#ffd800] transition-all duration-150 tracking-wider text-center"
         >
           LOGIN
         </Link>
@@ -56,7 +56,7 @@ export default function Navbar() {
       </div>
       </nav>
  {/* 2. MAIN BRAND HEADER (Yellow background, big title) */}
-          <header className="w-full bg-[#ffd200] border-b-4 border-black py-8 text-center select-none overflow-hidden">
+          <header className="w-full bg-[#ffd800] py-8 text-center select-none overflow-hidden">
             {/* Custom Keyframes Style Injection */}
             <style>{`
             @keyframes strictOpacityFade {
@@ -69,7 +69,7 @@ export default function Navbar() {
           `}</style>
     
     <Link href={"/"}>
-    <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tighter text-black uppercase animate-custom-fade">
+    <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tighter text-black uppercase animate-custom-fade">
               A7 SATTA KING OFFICIAL
             </h1>
     </Link>

@@ -103,7 +103,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white text-black font-sans selection:bg-[#ffd200] selection:text-black">
-      
+
 
       {/* 3. LIVE STATUS BLOCK (Black background) */}
       <LiveStatus currentTime={currentTime} />
@@ -137,17 +137,11 @@ export default function Home() {
             href="https://wa.me/your_number"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-4 flex items-center gap-4 bg-[#00c600] text-white font-black text-xs sm:text-sm px-6 py-2 rounded-full border-2 border-white shadow-[2px_2px_0px_#000000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_#000000] transition-all duration-150"
+            className="flex items-center gap-4 text-white "
           >
             {/* WhatsApp Pill Icon Wrapper */}
-            <div className="bg-white rounded-full p-0.5 flex items-center justify-center text-[#00c600]">
-              <FaWhatsapp className="w-8 h-8 text-[#00c600]" />
-            </div>
+            <img src="/whatsapp-btn.png" alt="" className="h-[65px] text-[#00a2ed]" />
 
-            <div className="flex flex-col items-start leading-none">
-              <span className="text-sm font-black tracking-wide">WhatsApp</span>
-              <span className="text-[9px] font-bold opacity-90">Click to chat</span>
-            </div>
           </a>
 
 
@@ -162,16 +156,9 @@ export default function Home() {
             href="https://t.me/your_channel"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-4 flex items-center gap-4 bg-[#00a2ed] text-white font-black text-xs sm:text-sm px-6 py-2 rounded-full border-2 border-white transition-all duration-150"
+            className="flex items-center gap-4 text-white font-black transition-all duration-150"
           >
-            {/* Telegram Pill Icon Wrapper */}
-            <div className="bg-white rounded-full p-0.5 flex items-center justify-center text-[#00a2ed]">
-              <FaTelegramPlane className="w-8 h-8 text-[#00a2ed]" />
-            </div>
-            <div className="flex flex-col items-start leading-none">
-              <span className="text-sm font-black tracking-wide">Telegram</span>
-              <span className="text-[9px] font-bold opacity-90">Click to connect</span>
-            </div>
+            <img src="/telegram-btn.png" alt="" className="h-[65px] text-[#00a2ed]" />
           </a>
         </div>
       </div>
@@ -184,16 +171,16 @@ export default function Home() {
           {/* Header & Filter options */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 ">
 
-            <div className="w-full bg-gradient-to-b from-orange-400 to-[#ffd200] border-b-2 border-black py-4 text-center">
-              <h3 className="text-xl sm:text-3xl font-semibold text-black tracking-wider uppercase">
-                Satta Results Archives
+            <div className="w-full bg-gradient-to-b from-orange-400 to-[#ffd200] border-t-2 border-b border-black py-4 pb-6 text-center">
+              <h3 className="text-xl sm:text-xl font-semibold text-black tracking-wider uppercase">
+                SATTA RECORD CHART 2026
               </h3>
             </div>
 
           </div>
-          <SattaChartSearch/>
+          <SattaChartSearch />
 
-          <WeeklyResultsSection/>
+          <WeeklyResultsSection />
 
 
         </section>
@@ -203,17 +190,11 @@ export default function Home() {
 
 
         {/* 10. A7 SATTA KING BLOG (Black background card blocks) */}
-        <Blogs/>
+        <Blogs />
 
       </main>
       {/* 12. FLOATING BOTTOM RIGHT REFRESH BUTTON */}
-      <button
-        onClick={handleRefresh}
-        className="fixed bottom-4 right-4 bg-black hover:bg-neutral-900 text-white font-extrabold text-xs sm:text-sm py-2 px-5 rounded-full border-2 border-white shadow-[3px_3px_0px_#ffd200] flex items-center gap-1.5 z-50 transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_#ffd200]"
-        aria-label="Refresh page"
-      >
-        Refresh 🔄
-      </button>
+      
 
     </div>
   );
