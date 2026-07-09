@@ -63,7 +63,7 @@ export default function AdminLayout({ children }: LayoutProps) {
             icon: <PlusCircle size={20} />,
             subMenu: [
                 { name: 'All Satta Results', href: '/admin/#' },
-                { name: 'Add New Satta', href: '/admin/#' }
+                { name: 'Add New Satta', href: '/admin/game/new' }
             ]
         },
         { name: 'FAQ', icon: <HelpCircle size={20} />, href: '/admin/#' },
