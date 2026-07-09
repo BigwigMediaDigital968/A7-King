@@ -1,30 +1,31 @@
 import { connectDB } from "@/app/lib/mongodb";
-import Satta from "@/app/models/Satta";
+import Result from "@/app/models/Results";
 import { NextRequest, NextResponse } from "next/server";
 
 interface Params {
-  params: Promise<{
-    id: string;
-  }>;
+  params: Promise<{ id: string }>;
 }
 
 export async function GET(req: NextRequest, { params }: Params) {
   try {
     await connectDB();
     const { id } = await params;
-    const satta = await Satta.findById(id);
 
-    if (!satta) {
+    const result = await Result.findById(id)
+      .populate("sattaId", "name slug resultTime")
+      .lean();
+
+    if (!result) {
       return NextResponse.json(
-        { success: false, message: "Satta not found" },
+        { success: false, message: "Result not found" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json({ success: true, data: satta });
+    return NextResponse.json({ success: true, data: result });
   } catch {
     return NextResponse.json(
-      { success: false, message: "Failed to fetch satta" },
+      { success: false, message: "Failed to fetch result" },
       { status: 500 }
     );
   }
@@ -36,27 +37,28 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     const { id } = await params;
     const body = await req.json();
 
-    const satta = await Satta.findByIdAndUpdate(
+    const result = await Result.findByIdAndUpdate(
       id,
       {
         $set: {
-          name: body.name,
-          slug: body.slug,
-          resultTime: body.resultTime,
+          sattaId: body.sattaId,
+          drawDate: body.drawDate,
+          result: body.result,
+          status: body.status,
           isActive: body.isActive,
         },
       },
       { new: true, runValidators: true }
-    );
+    ).populate("sattaId", "name slug resultTime");
 
-    if (!satta) {
+    if (!result) {
       return NextResponse.json(
-        { success: false, message: "Satta not found" },
+        { success: false, message: "Result not found" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json({ success: true, data: satta });
+    return NextResponse.json({ success: true, data: result });
   } catch (error: any) {
     return NextResponse.json(
       { success: false, message: error.message },
@@ -69,22 +71,23 @@ export async function DELETE(req: NextRequest, { params }: Params) {
   try {
     await connectDB();
     const { id } = await params;
-    const satta = await Satta.findByIdAndDelete(id);
 
-    if (!satta) {
+    const result = await Result.findByIdAndDelete(id);
+
+    if (!result) {
       return NextResponse.json(
-        { success: false, message: "Satta not found" },
+        { success: false, message: "Result not found" },
         { status: 404 }
       );
     }
 
     return NextResponse.json({
       success: true,
-      message: "Satta deleted successfully",
+      message: "Result deleted successfully",
     });
   } catch {
     return NextResponse.json(
-      { success: false, message: "Failed to delete satta" },
+      { success: false, message: "Failed to delete result" },
       { status: 500 }
     );
   }

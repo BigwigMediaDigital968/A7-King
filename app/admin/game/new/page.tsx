@@ -1,5 +1,5 @@
-import AreaForm from "../../components/AreaForm";
+import SattaForm from "../../components/SattaForm";
 
 export default function page() {
-  return <AreaForm />;
+  return <SattaForm />;
 }

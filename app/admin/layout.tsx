@@ -15,7 +15,8 @@ import {
     ChevronDown,
     ChevronUp,
     LogOut,
-    UserCircle
+    UserCircle,
+    Gamepad2
 } from 'lucide-react';
 import AdminGuard from './AdminGuard';
 import { Toaster, toast } from 'react-hot-toast';
@@ -62,8 +63,10 @@ export default function AdminLayout({ children }: LayoutProps) {
             name: 'Add Satta',
             icon: <PlusCircle size={20} />,
             subMenu: [
-                { name: 'All Satta Results', href: '/admin/#' },
-                { name: 'Add New Satta', href: '/admin/game/new' }
+                { name: 'All Satta Games', href: '/admin/game' },
+                { name: 'Add New Satta', href: '/admin/game/new' },
+                { name: 'All Results', href: '/admin/results' },
+                { name: 'Add New Result', href: '/admin/results/new' },
             ]
         },
         { name: 'FAQ', icon: <HelpCircle size={20} />, href: '/admin/#' },

@@ -3,8 +3,7 @@ import mongoose, { Schema, Model, Document } from "mongoose";
 export interface ISattaDocument extends Document {
   name: string;
   slug: string;
-    resultTime: string;
-
+  resultTime: string; // stored as "HH:MM" 24-hour (e.g. "22:45")
   isActive: boolean;
 }
 
@@ -24,6 +23,7 @@ const SattaSchema = new Schema<ISattaDocument>(
       lowercase: true,
       trim: true,
     },
+
     resultTime: {
       type: String,
       required: true,
@@ -40,5 +40,5 @@ const SattaSchema = new Schema<ISattaDocument>(
   }
 );
 
-export default (mongoose.models.Area as Model<ISattaDocument>) ||
-mongoose.model<ISattaDocument>("Area", SattaSchema);
+export default (mongoose.models.Satta as Model<ISattaDocument>) ||
+  mongoose.model<ISattaDocument>("Satta", SattaSchema);

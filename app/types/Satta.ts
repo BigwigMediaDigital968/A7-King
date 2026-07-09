@@ -3,8 +3,7 @@ export interface ISatta {
   name: string;
   slug: string;
   isActive: boolean;
-  resultTime: string;
-
+  resultTime: string; // "HH:MM" 24-hour format stored in DB
   createdAt: string;
   updatedAt: string;
 }

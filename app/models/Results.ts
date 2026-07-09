@@ -4,6 +4,8 @@ export interface IResultDocument extends Document {
   sattaId: mongoose.Types.ObjectId;
   drawDate: Date;
   result: string;
+  status: "draft" | "published";
+  isActive: boolean;
 }
 
 const ResultSchema = new Schema<IResultDocument>(
@@ -25,6 +27,17 @@ const ResultSchema = new Schema<IResultDocument>(
       type: String,
       required: true,
       match: /^\d{2}$/,
+    },
+
+    status: {
+      type: String,
+      enum: ["draft", "published"],
+      default: "draft",
+    },
+
+    isActive: {
+      type: Boolean,
+      default: true,
     },
   },
   {
