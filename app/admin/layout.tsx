@@ -71,7 +71,7 @@ export default function AdminLayout({ children }: LayoutProps) {
         },
         { name: 'FAQ', icon: <HelpCircle size={20} />, href: '/admin/#' },
         { name: 'Edit Khaiwal Data', icon: <User size={20} />, href: '/admin/#' },
-        { name: 'Edit Contact Data', icon: <Contact size={20} />, href: '/admin/#' },
+        { name: 'Edit Contact Data', icon: <Contact size={20} />, href: '/admin/contact' },
         { name: 'Yearly Chart', icon: <BarChart3 size={20} />, href: '/admin/#' },
     ];
 
