@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { PlusCircle, Pencil, Trash2, Search, RefreshCw, X } from "lucide-react";
+import { PlusCircle, Pencil, Trash2, Search, RefreshCw, X, Eye } from "lucide-react";
 import { IContact } from "@/app/types/Contact";
 import ContactForm from "@/app/admin/components/ContactForm";
 
@@ -13,6 +13,7 @@ export default function ContactListPage() {
   const [toast, setToast] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContact, setModalContact] = useState<IContact | null>(null);
+  const [viewContact, setViewContact] = useState<IContact | null>(null);
 
   const showToast = (type: "success" | "error", text: string) => {
     setToast({ type, text });
@@ -50,9 +51,17 @@ export default function ContactListPage() {
     setIsModalOpen(true);
   };
 
+  const openViewModal = (contact: IContact) => {
+    setViewContact(contact);
+  };
+
   const closeModal = () => {
     setIsModalOpen(false);
     setModalContact(null);
+  };
+
+  const closeViewModal = () => {
+    setViewContact(null);
   };
 
   const handleModalSuccess = (contact: IContact) => {
@@ -76,6 +85,7 @@ export default function ContactListPage() {
         contact.email ?? "",
         contact.whatsappNumber ?? "",
         contact.telegramLink ?? "",
+        contact.referenceId ?? "",
         contact._id,
       ]
         .some((value) => value?.toLowerCase().includes(query));
@@ -179,6 +189,55 @@ export default function ContactListPage() {
         </div>
       )}
 
+      {viewContact && (
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/40 p-4">
+          <div className="relative w-full max-w-lg overflow-hidden rounded-3xl bg-white shadow-2xl">
+            <button
+              type="button"
+              onClick={closeViewModal}
+              className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50"
+              aria-label="Close details"
+            >
+              <X size={20} />
+            </button>
+            <div className="p-6">
+              <div className="space-y-4">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">Contact Details</h2>
+                  <p className="text-sm text-gray-500 mt-1">View full contact information and references.</p>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+                    <p className="text-xs font-semibold text-gray-500 uppercase">Reference ID</p>
+                    <p className="mt-2 text-sm font-semibold text-gray-900">{viewContact.referenceId || "—"}</p>
+                  </div>
+                  <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+                    <p className="text-xs font-semibold text-gray-500 uppercase">Mongo ID</p>
+                    <p className="mt-2 text-sm font-semibold text-gray-900 break-all">{viewContact._id}</p>
+                  </div>
+                  <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4 sm:col-span-2">
+                    <p className="text-xs font-semibold text-gray-500 uppercase">Name</p>
+                    <p className="mt-2 text-sm font-semibold text-gray-900">{viewContact.name}</p>
+                  </div>
+                  <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+                    <p className="text-xs font-semibold text-gray-500 uppercase">WhatsApp</p>
+                    <p className="mt-2 text-sm text-gray-900">{viewContact.whatsappNumber || "—"}</p>
+                  </div>
+                  <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+                    <p className="text-xs font-semibold text-gray-500 uppercase">Telegram</p>
+                    <p className="mt-2 text-sm text-gray-900 break-all">{viewContact.telegramLink || "—"}</p>
+                  </div>
+                  <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+                    <p className="text-xs font-semibold text-gray-500 uppercase">Email</p>
+                    <p className="mt-2 text-sm text-gray-900">{viewContact.email || "—"}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
         {loading ? (
           <div className="py-16 flex flex-col items-center gap-3 text-gray-400">
@@ -231,6 +290,13 @@ export default function ContactListPage() {
                     </td>
                     <td className="px-5 py-4 text-right">
                       <div className="flex justify-end gap-2">
+                        <button
+                          type="button"
+                          onClick={() => openViewModal(contact)}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-lg transition-colors"
+                        >
+                          <Eye size={12} /> View
+                        </button>
                         <button
                           type="button"
                           onClick={() => openEditModal(contact)}
