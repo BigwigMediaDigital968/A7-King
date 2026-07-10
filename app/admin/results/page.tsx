@@ -51,6 +51,7 @@ export default function ResultListPage() {
     try {
       const res = await fetch("/api/results");
       const data = await res.json();
+      console.log("data",data )
       if (data.success) setResults(data.data);
     } catch {
       showToast("error", "Failed to load results");
@@ -81,9 +82,9 @@ export default function ResultListPage() {
   };
 
   const filtered = results.filter((r) => {
-    const gameName = typeof r.sattaId === "object" ? r.sattaId.name : "";
+    const gameName = typeof r.sattaId === "object" ? r.sattaId?.name : "";
     const matchSearch =
-      gameName.toLowerCase().includes(search.toLowerCase()) ||
+      gameName?.toLowerCase().includes(search?.toLowerCase()) ||
       r.result.includes(search);
     const matchStatus = statusFilter === "all" || r.status === statusFilter;
     return matchSearch && matchStatus;

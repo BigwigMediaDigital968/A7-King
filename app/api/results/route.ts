@@ -14,10 +14,11 @@ export async function GET(req: NextRequest) {
     if (sattaId) filter.sattaId = sattaId;
     if (status) filter.status = status;
 
-    const results = await Result.find(filter)
+    const results = (await Result.find(filter)
       .populate("sattaId", "name slug resultTime")
       .sort({ drawDate: -1 })
-      .lean();
+      .lean())
+      .filter((r) => r.sattaId);
 
     return NextResponse.json({ success: true, data: results });
   } catch {
