@@ -35,12 +35,23 @@ function to24hr(hour: string, minute: string, period: "AM" | "PM"): string {
   return `${String(h).padStart(2, "0")}:${minute}`;
 }
 
-function generateSlug(value: string) {
-  return value
+function generateSlug(value: string): string {
+  // Strip Devanagari / all non-ASCII, then build Latin slug
+  const latinOnly = value
     .toLowerCase()
     .trim()
+    .replace(/[^\x00-\x7F]/g, " ") // treat non-ASCII blocks as spaces
     .replace(/\s+/g, "-")
-    .replace(/[^a-z0-9-]/g, "");
+    .replace(/[^a-z0-9-]/g, "")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+
+  if (latinOnly.length >= 2) return latinOnly;
+
+  // Fallback for pure Hindi names or very short results: stable unique slug
+  const ts = Date.now().toString(36);
+  const rand = Math.random().toString(36).substring(2, 5);
+  return `satta-${ts}-${rand}`;
 }
 
 export default function SattaForm({ initialData, onSuccess }: SattaFormProps) {
@@ -164,7 +175,14 @@ export default function SattaForm({ initialData, onSuccess }: SattaFormProps) {
           />
           {name && (
             <p className="text-xs text-gray-400 mt-1.5">
-              Slug: <span className="text-gray-600 font-mono">{previewSlug}</span>
+              Slug:{" "}
+              {/[a-zA-Z0-9]/.test(name) ? (
+                <span className="text-gray-600 font-mono">{previewSlug}</span>
+              ) : (
+                <span className="text-amber-600 font-mono">
+                  auto-generated (Hindi name detected)
+                </span>
+              )}
             </p>
           )}
         </div>
