@@ -10,9 +10,8 @@ export default function SattaChartSearch() {
     // Clean strings to make clean URL pathing slugs
     const gameSlug = selectedGame.toLowerCase().replace(/\s+/g, "-");
     
-    // Perform standard client-side routing redirect
-    // Updates window path to something like: /charts/daman/2026
-    window.location.href = `/charts/${gameSlug}/${selectedYear}`;
+    // Redirect to the dynamic slug page with year parameter
+    window.location.href = `/${gameSlug}?year=${selectedYear}`;
   };
 
   return (

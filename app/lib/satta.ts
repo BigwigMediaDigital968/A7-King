@@ -119,11 +119,11 @@ export const getWeeklyResults = async (): Promise<{
       { game: "GWALIOR", results: ["07", "11", "56", "90", "44", "66", "19"] },
       { game: "DELHI BAZAR", results: ["57", "22", "18", "73", "91", "26", "33"] },
       { game: "DELHI MATKA", results: ["97", "54", "76", "88", "42", "15", "09"] },
-       { game: "SADAR BAZAR", results: ["21", "45", "78", "12", "67", "34", "89"] },
+      { game: "SADAR BAZAR", results: ["21", "45", "78", "12", "67", "34", "89"] },
       { game: "GWALIOR", results: ["07", "11", "56", "90", "44", "66", "19"] },
       { game: "DELHI BAZAR", results: ["57", "22", "18", "73", "91", "26", "33"] },
       { game: "DELHI MATKA", results: ["97", "54", "76", "88", "42", "15", "09"] },
-       { game: "SADAR BAZAR", results: ["21", "45", "78", "12", "67", "34", "89"] },
+      { game: "SADAR BAZAR", results: ["21", "45", "78", "12", "67", "34", "89"] },
       { game: "GWALIOR", results: ["07", "11", "56", "90", "44", "66", "19"] },
       { game: "DELHI BAZAR", results: ["57", "22", "18", "73", "91", "26", "33"] },
       { game: "DELHI MATKA", results: ["97", "54", "76", "88", "42", "15", "09"] },
@@ -131,7 +131,7 @@ export const getWeeklyResults = async (): Promise<{
       { game: "GWALIOR", results: ["07", "11", "56", "90", "44", "66", "19"] },
       { game: "DELHI BAZAR", results: ["57", "22", "18", "73", "91", "26", "33"] },
       { game: "DELHI MATKA", results: ["97", "54", "76", "88", "42", "15", "09"] },
-       { game: "SADAR BAZAR", results: ["21", "45", "78", "12", "67", "34", "89"] },
+      { game: "SADAR BAZAR", results: ["21", "45", "78", "12", "67", "34", "89"] },
       { game: "GWALIOR", results: ["07", "11", "56", "90", "44", "66", "19"] },
       { game: "DELHI BAZAR", results: ["57", "22", "18", "73", "91", "26", "33"] },
       { game: "DELHI MATKA", results: ["97", "54", "76", "88", "42", "15", "09"] },
@@ -142,21 +142,70 @@ export const getWeeklyResults = async (): Promise<{
       { game: "FARIDABAD", results: ["19", "24", "87", "65", "12", "44", "70"] },
       { game: "ALWAR", results: ["23", "51", "80", "99", "61", "28", "74"] },
       { game: "GAZIABAD", results: ["54", "90", "37", "42", "16", "73", "85"] },
-       { game: "SADAR BAZAR", results: ["21", "45", "78", "12", "67", "34", "89"] },
+      { game: "SADAR BAZAR", results: ["21", "45", "78", "12", "67", "34", "89"] },
       { game: "GWALIOR", results: ["07", "11", "56", "90", "44", "66", "19"] },
       { game: "DELHI BAZAR", results: ["57", "22", "18", "73", "91", "26", "33"] },
       { game: "DELHI MATKA", results: ["97", "54", "76", "88", "42", "15", "09"] },
-       { game: "SADAR BAZAR", results: ["21", "45", "78", "12", "67", "34", "89"] },
+      { game: "SADAR BAZAR", results: ["21", "45", "78", "12", "67", "34", "89"] },
       { game: "GWALIOR", results: ["07", "11", "56", "90", "44", "66", "19"] },
       { game: "DELHI BAZAR", results: ["57", "22", "18", "73", "91", "26", "33"] },
       { game: "DELHI MATKA", results: ["97", "54", "76", "88", "42", "15", "09"] },
       { game: "GWALIOR", results: ["07", "11", "56", "90", "44", "66", "19"] },
       { game: "DELHI BAZAR", results: ["57", "22", "18", "73", "91", "26", "33"] },
       { game: "DELHI MATKA", results: ["97", "54", "76", "88", "42", "15", "09"] },
-       { game: "SADAR BAZAR", results: ["21", "45", "78", "12", "67", "34", "89"] },
+      { game: "SADAR BAZAR", results: ["21", "45", "78", "12", "67", "34", "89"] },
       { game: "GWALIOR", results: ["07", "11", "56", "90", "44", "66", "19"] },
       { game: "DELHI BAZAR", results: ["57", "22", "18", "73", "91", "26", "33"] },
       { game: "DELHI MATKA", results: ["97", "54", "76", "88", "42", "15", "09"] },
     ],
   };
+};
+
+export interface YearlySattaResponse {
+  success: boolean;
+  data: {
+    game: {
+      name: string;
+      slug: string;
+      resultTime: string;
+    };
+    year: number;
+    months: Record<string, Record<number, string | null>>;
+  };
+}
+
+export const fetchSattaYearlyData = async (
+  slug: string,
+  year: number
+): Promise<YearlySattaResponse> => {
+  const response = await fetch(`/api/satta/yearly?slug=${slug}&year=${year}`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch yearly Satta results");
+  }
+  return response.json();
+};
+
+export interface YearlyGameData {
+  game: string;
+  slug: string;
+  time: string;
+  year: number;
+  months: Record<string, Record<number, string>>;
+}
+
+export interface AllYearlyDataResponse {
+  success: boolean;
+  range: string;
+  year: number;
+  data: YearlyGameData[];
+}
+
+export const fetchAllYearlyData = async (
+  year: number
+): Promise<AllYearlyDataResponse> => {
+  const response = await fetch(`/api/data?range=yearly&year=${year}`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch all yearly Satta data");
+  }
+  return response.json();
 };

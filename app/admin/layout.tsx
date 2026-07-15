@@ -69,10 +69,10 @@ export default function AdminLayout({ children }: LayoutProps) {
                 { name: 'Add New Result', href: '/admin/results/new' },
             ]
         },
-        { name: 'FAQ', icon: <HelpCircle size={20} />, href: '/admin/#' },
+        // { name: 'FAQ', icon: <HelpCircle size={20} />, href: '/admin/#' },
         { name: 'Edit Khaiwal Data', icon: <User size={20} />, href: '/admin/#' },
         { name: 'Edit Contact Data', icon: <Contact size={20} />, href: '/admin/contact' },
-        { name: 'Yearly Chart', icon: <BarChart3 size={20} />, href: '/admin/#' },
+        { name: 'Yearly Chart', icon: <BarChart3 size={20} />, href: '/admin/yearly-chart' },
     ];
 
     const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>(() => {
@@ -127,7 +127,7 @@ export default function AdminLayout({ children }: LayoutProps) {
 
                         {/* --- TOP RIGHT PROFILE DROPDOWN --- */}
                         <div className="relative" ref={profileRef}>
-                            <button 
+                            <button
                                 onClick={() => setIsProfileOpen(!isProfileOpen)}
                                 className="cursor-pointer flex items-center gap-2 p-1.5 rounded-md hover:bg-gray-700 transition-colors focus:outline-none"
                             >
@@ -182,7 +182,7 @@ export default function AdminLayout({ children }: LayoutProps) {
 
                                         return (
                                             <li key={index}>
-                                                <div 
+                                                <div
                                                     onClick={() => {
                                                         if (item.subMenu) {
                                                             toggleDropdown(item.name);
@@ -216,8 +216,8 @@ export default function AdminLayout({ children }: LayoutProps) {
                                                                     key={subIdx}
                                                                     onClick={() => handleNavigation(sub.href)}
                                                                     className={`px-6 py-2 text-xs cursor-pointer rounded-l-md transition-colors block
-                                                                        ${isChildActive 
-                                                                            ? 'text-white font-semibold bg-[#e11d48]/20 border-l-2 border-[#e11d48]' 
+                                                                        ${isChildActive
+                                                                            ? 'text-white font-semibold bg-[#e11d48]/20 border-l-2 border-[#e11d48]'
                                                                             : 'text-gray-400 hover:text-white hover:bg-gray-800'
                                                                         }
                                                                     `}

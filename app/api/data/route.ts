@@ -212,49 +212,82 @@ async function yearly(games: any[], year: number) {
     .select("sattaId drawDate result")
     .lean();
 
-  // gameId → monthName → day → result
-  const byGame = new Map<
-    string,
-    Record<string, Record<number, string | null>>
-  >();
+  // Pre-initialize map of gameId -> monthName -> day -> "-"
+  const byGame = new Map<string, Record<string, Record<number, string>>>();
 
+  // Ensure every active game has all months and days initialized to "-"
+  games.forEach((game) => {
+    const id = game._id.toString();
+    const initialMonths: Record<string, Record<number, string>> = {};
+    MONTHS.forEach((mName) => {
+      initialMonths[mName] = {};
+      for (let day = 1; day <= 31; day++) {
+        initialMonths[mName][day] = "-";
+      }
+    });
+    byGame.set(id, initialMonths);
+  });
+
+  // Populate actual database results
   for (const r of rows) {
     const id = r.sattaId.toString();
-    if (!byGame.has(id)) byGame.set(id, {});
+    const gameEntry = byGame.get(id);
+    if (!gameEntry) continue; // skip if game is not active
 
-    // Convert UTC drawDate to IST to read IST month/day
+    // Convert UTC drawDate to IST to read correct IST month and day
     const istDate = new Date(r.drawDate.getTime() + 5.5 * 60 * 60 * 1000);
     const monthName = MONTHS[istDate.getUTCMonth()];
     const day = istDate.getUTCDate();
 
-    const gameEntry = byGame.get(id)!;
-    if (!gameEntry[monthName]) gameEntry[monthName] = {};
-    gameEntry[monthName][day] = r.result;
+    if (gameEntry[monthName]) {
+      gameEntry[monthName][day] = r.result;
+    }
   }
 
+  // Get current IST time details to clear today's/future results
   const nowIST = new Date(
     new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
   );
 
   const currentYear = nowIST.getFullYear();
-  const currentMonthName = MONTHS[nowIST.getMonth()];
+  const currentMonthIdx = nowIST.getMonth();
+  const currentMonthName = MONTHS[currentMonthIdx];
   const currentDay = nowIST.getDate();
 
   const data = games.map((game) => {
-    const months: Record<string, Record<number, string | null>> =
-      structuredClone(byGame.get(game._id.toString()) ?? {});
+    const id = game._id.toString();
+    const months = byGame.get(id)!; // guaranteed to exist since we initialized it
 
-    if (
-      year === currentYear &&
-      !hasResultTimePassed(game.resultTime)
-    ) {
-      if (months[currentMonthName]?.[currentDay] !== undefined) {
-        months[currentMonthName][currentDay] = null;
+    // If querying the current year, enforce current day and future restrictions
+    if (year === currentYear) {
+      // 1. Check if today's result time has passed. If not, today's result must be "-"
+      if (!hasResultTimePassed(game.resultTime)) {
+        if (months[currentMonthName]) {
+          months[currentMonthName][currentDay] = "-";
+        }
+      }
+
+      // 2. Future days of the current month must be "-"
+      for (let d = currentDay + 1; d <= 31; d++) {
+        if (months[currentMonthName]) {
+          months[currentMonthName][d] = "-";
+        }
+      }
+
+      // 3. All future months must be "-"
+      for (let mIdx = currentMonthIdx + 1; mIdx < 12; mIdx++) {
+        const futureMonthName = MONTHS[mIdx];
+        for (let d = 1; d <= 31; d++) {
+          if (months[futureMonthName]) {
+            months[futureMonthName][d] = "-";
+          }
+        }
       }
     }
 
     return {
       game: game.name,
+      slug: game.slug,
       time: formatTime12(game.resultTime),
       year,
       months,
