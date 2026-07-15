@@ -188,6 +188,7 @@ export const fetchSattaYearlyData = async (
 export interface YearlyGameData {
   game: string;
   slug: string;
+  tableNo:number;
   time: string;
   year: number;
   months: Record<string, Record<number, string>>;

@@ -5,6 +5,7 @@ export interface ISattaDocument extends Document {
   slug: string;
   resultTime: string; // stored as "HH:MM" 24-hour (e.g. "22:45")
   isActive: boolean;
+  tableNo: Number;
 }
 
 const SattaSchema = new Schema<ISattaDocument>(
@@ -34,6 +35,10 @@ const SattaSchema = new Schema<ISattaDocument>(
       type: Boolean,
       default: true,
     },
+    tableNo: {
+      type: Number,
+      enum: [1, 2]
+    }
   },
   {
     timestamps: true,

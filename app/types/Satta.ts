@@ -6,4 +6,5 @@ export interface ISatta {
   resultTime: string; // "HH:MM" 24-hour format stored in DB
   createdAt: string;
   updatedAt: string;
+  tableNo: number;
 }

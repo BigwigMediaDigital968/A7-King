@@ -7,8 +7,9 @@ interface SattaGame {
   _id?: string;
   name: string;
   slug: string;
-  resultTime: string; // "HH:MM" 24-hr stored in DB
+  resultTime: string; 
   isActive?: boolean;
+  tableNo: 1 | 2; // Added tableNo support
 }
 
 interface SattaFormProps {
@@ -16,7 +17,6 @@ interface SattaFormProps {
   onSuccess?: (satta: SattaGame) => void;
 }
 
-// Convert 24-hr "HH:MM" to 12-hr parts { hour, minute, period }
 function to12hr(time24: string): { hour: string; minute: string; period: "AM" | "PM" } {
   if (!time24 || !time24.includes(":")) return { hour: "10", minute: "00", period: "PM" };
   const [hStr, mStr] = time24.split(":");
@@ -27,7 +27,6 @@ function to12hr(time24: string): { hour: string; minute: string; period: "AM" | 
   return { hour: String(h).padStart(2, "0"), minute: mStr, period };
 }
 
-// Convert 12-hr parts to 24-hr "HH:MM"
 function to24hr(hour: string, minute: string, period: "AM" | "PM"): string {
   let h = parseInt(hour, 10);
   if (period === "AM" && h === 12) h = 0;
@@ -36,11 +35,10 @@ function to24hr(hour: string, minute: string, period: "AM" | "PM"): string {
 }
 
 function generateSlug(value: string): string {
-  // Strip Devanagari / all non-ASCII, then build Latin slug
   const latinOnly = value
     .toLowerCase()
     .trim()
-    .replace(/[^\x00-\x7F]/g, " ") // treat non-ASCII blocks as spaces
+    .replace(/[^\x00-\x7F]/g, " ") 
     .replace(/\s+/g, "-")
     .replace(/[^a-z0-9-]/g, "")
     .replace(/-+/g, "-")
@@ -48,7 +46,6 @@ function generateSlug(value: string): string {
 
   if (latinOnly.length >= 2) return latinOnly;
 
-  // Fallback for pure Hindi names or very short results: stable unique slug
   const ts = Date.now().toString(36);
   const rand = Math.random().toString(36).substring(2, 5);
   return `satta-${ts}-${rand}`;
@@ -60,8 +57,8 @@ export default function SattaForm({ initialData, onSuccess }: SattaFormProps) {
 
   const [name, setName] = useState(initialData?.name ?? "");
   const [isActive, setIsActive] = useState(initialData?.isActive ?? true);
+  const [tableNo, setTableNo] = useState<1 | 2>((initialData?.tableNo as 1 | 2) ?? 1); // Track dropdown choices
 
-  // Time state in 12-hr parts
   const init12 = useMemo(() => to12hr(initialData?.resultTime ?? ""), [initialData?.resultTime]);
   const [timeHour, setTimeHour] = useState(init12.hour);
   const [timeMinute, setTimeMinute] = useState(init12.minute);
@@ -77,7 +74,6 @@ export default function SattaForm({ initialData, onSuccess }: SattaFormProps) {
     setLoading(true);
     setMessage(null);
 
-    // Validate hour (1-12) and minute (00-59)
     const h = parseInt(timeHour, 10);
     const m = parseInt(timeMinute, 10);
     if (isNaN(h) || h < 1 || h > 12) {
@@ -105,6 +101,7 @@ export default function SattaForm({ initialData, onSuccess }: SattaFormProps) {
           slug: generateSlug(name),
           resultTime: resultTime24,
           isActive,
+          tableNo: Number(tableNo), // Included table number in submission payload
         }),
       });
 
@@ -123,6 +120,7 @@ export default function SattaForm({ initialData, onSuccess }: SattaFormProps) {
         setTimeMinute("00");
         setTimePeriod("PM");
         setIsActive(true);
+        setTableNo(1); // Reset dropdown option choice
       }
 
       onSuccess?.(data.data);
@@ -148,7 +146,6 @@ export default function SattaForm({ initialData, onSuccess }: SattaFormProps) {
 
   return (
     <div className="max-w-xl w-full">
-      {/* Header */}
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-800">{title}</h2>
         <p className="text-sm text-gray-500 mt-1">
@@ -187,13 +184,12 @@ export default function SattaForm({ initialData, onSuccess }: SattaFormProps) {
           )}
         </div>
 
-        {/* Result Time — IST 12-hour picker */}
+        {/* Result Time */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
             Result Time (IST) <span className="text-red-500">*</span>
           </label>
           <div className="flex items-center gap-2">
-            {/* Hour */}
             <select
               value={timeHour}
               onChange={(e) => setTimeHour(e.target.value)}
@@ -204,7 +200,6 @@ export default function SattaForm({ initialData, onSuccess }: SattaFormProps) {
               ))}
             </select>
             <span className="text-xl font-bold text-gray-500 select-none">:</span>
-            {/* Minute */}
             <select
               value={timeMinute.padStart(2, "0")}
               onChange={(e) => setTimeMinute(e.target.value)}
@@ -214,7 +209,6 @@ export default function SattaForm({ initialData, onSuccess }: SattaFormProps) {
                 <option key={m} value={m}>{m}</option>
               ))}
             </select>
-            {/* AM / PM */}
             <div className="flex rounded-xl border border-gray-300 overflow-hidden">
               {(["AM", "PM"] as const).map((p) => (
                 <button
@@ -235,6 +229,24 @@ export default function SattaForm({ initialData, onSuccess }: SattaFormProps) {
           <p className="text-xs text-gray-400 mt-1.5">
             Preview: <span className="text-gray-700 font-semibold">{previewTime}</span>{" "}
             <span className="text-gray-400">(IST)</span>
+          </p>
+        </div>
+
+        {/* Table Assignment Select Input Box Selection Dropdown */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+            Assign Display Table Number <span className="text-red-500">*</span>
+          </label>
+          <select
+            value={tableNo}
+            onChange={(e) => setTableNo(Number(e.target.value) as 1 | 2)}
+            className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-[#e11d48] focus:ring-2 focus:ring-[#e11d48]/20 bg-white cursor-pointer"
+          >
+            <option value={1}>Table 1</option>
+            <option value={2}>Table 2</option>
+          </select>
+          <p className="text-xs text-gray-400 mt-1.5">
+            Selects which component viewport layout block maps this active dataset logic row.
           </p>
         </div>
 

@@ -131,6 +131,8 @@ async function daily(games: any[]) {
     return {
       game: game.name,
       time: formatTime12(game.resultTime),
+      tableNo:game.tableNo,
+      slug:game.slug,
       result: [
         yesterdayMap.get(id) ?? null,
         showTodayResult ? todayMap.get(id) ?? null : null,

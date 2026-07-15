@@ -44,7 +44,7 @@ export default function KhaiwalGrid() {
 
             <div className="mt-4 space-y-1.5 w-full text-left px-2">
               {timingsData1And2.map((item, idx) => (
-                <div key={idx} className="flex justify-between items-center text-xs font-black text-black">
+                <div key={idx+"aguahdu"} className="flex justify-between items-center text-xs font-black text-black">
                   <span>⏰ {item.location}</span>
                   <span className="text-gray-500 font-bold flex-1 border-b border-dotted border-black/40 mx-1 mb-1"></span>
                   <span>{item.time}</span>
@@ -72,7 +72,7 @@ export default function KhaiwalGrid() {
 
             <div className="mt-4 space-y-1.5 w-full text-left px-2">
               {timingsData1And2.map((item, idx) => (
-                <div key={idx} className="flex justify-between items-center text-xs font-black text-black">
+                <div key={idx+"xyz"} className="flex justify-between items-center text-xs font-black text-black">
                   <span>⏰ {item.location}</span>
                   <span className="text-gray-500 font-bold flex-1 border-b border-dotted border-black/40 mx-1 mb-1"></span>
                   <span>{item.time}</span>
@@ -125,7 +125,7 @@ export default function KhaiwalGrid() {
 
             <div className="mt-4 space-y-1.5 w-full text-left px-2">
               {timingsData4.map((item, idx) => (
-                <div key={idx} className="flex justify-between items-center text-xs font-black text-black">
+                <div key={idx + "abc"} className="flex justify-between items-center text-xs font-black text-black">
                   <span>⏰ {item.location}</span>
                   <span className="text-gray-500 font-bold flex-1 border-b border-dotted border-black/40 mx-1 mb-1"></span>
                   <span>{item.time}</span>

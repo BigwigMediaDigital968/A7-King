@@ -74,9 +74,8 @@ export default function GameListPage() {
       {/* Toast */}
       {toast && (
         <div
-          className={`fixed top-20 right-4 z-50 px-4 py-3 rounded-xl shadow-lg text-sm font-medium text-white transition-all ${
-            toast.type === "success" ? "bg-green-600" : "bg-red-600"
-          }`}
+          className={`fixed top-20 right-4 z-50 px-4 py-3 rounded-xl shadow-lg text-sm font-medium text-white transition-all ${toast.type === "success" ? "bg-green-600" : "bg-red-600"
+            }`}
         >
           {toast.text}
         </div>
@@ -162,6 +161,7 @@ export default function GameListPage() {
                   <th className="px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                     <div className="flex items-center gap-1"><Clock size={12} /> Result Time (IST)</div>
                   </th>
+                  <th className="px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Table</th>
                   <th className="px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
                   <th className="px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Created</th>
                   <th className="px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Actions</th>
@@ -184,13 +184,15 @@ export default function GameListPage() {
                         {formatTime12(game.resultTime)}
                       </span>
                     </td>
+                    <td className="px-5 py-4 flex justify-center">
+                      <code className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-md font-mono">{game.tableNo?"Table "+game.tableNo:"-"}</code>
+                    </td>
                     <td className="px-5 py-4">
                       <span
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
-                          game.isActive
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${game.isActive
                             ? "bg-green-100 text-green-700"
                             : "bg-gray-100 text-gray-500"
-                        }`}
+                          }`}
                       >
                         <span
                           className={`h-1.5 w-1.5 rounded-full ${game.isActive ? "bg-green-500" : "bg-gray-400"}`}

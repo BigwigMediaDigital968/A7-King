@@ -44,6 +44,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
           slug: body.slug,
           resultTime: body.resultTime,
           isActive: body.isActive,
+          tableNo: body.tableNo,
         },
       },
       { new: true, runValidators: true }
