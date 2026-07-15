@@ -30,7 +30,7 @@ export const hasTimePassed = (timeString: string) => {
 
 export const fetchDailyData = async (): Promise<GameRow[]> => {
   const response = await fetch(
-    "http://localhost:3000/api/data?range=daily"
+    "/api/data?range=daily"
   );
 
   if (!response.ok) {
