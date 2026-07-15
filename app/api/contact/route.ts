@@ -88,19 +88,10 @@ export async function POST(req: NextRequest) {
             isActive: body.isActive ?? true,
             referenceId,
         });
-                const contacts = await Contact.find(filter).sort({ createdAt: -1 }).lean();
-
-                const contactsWithReferenceIds = await Promise.all(
-                    contacts.map(async (contact) => {
-                        if (contact.referenceId) return contact;
-
-                        const referenceId = await buildUniqueReferenceId(contact.name || contact._id.toString());
-                        await Contact.updateOne({ _id: contact._id }, { referenceId });
-                        return { ...contact, referenceId };
-                    })
-                );
+        
         return NextResponse.json({ success: true, data: contact }, { status: 201 });
-                return NextResponse.json({ success: true, data: contactsWithReferenceIds });
+
+    } catch (error: any) {
         return NextResponse.json(
             { success: false, message: error.message || "Failed to create contact" },
             { status: 400 }

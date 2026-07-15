@@ -1,7 +1,18 @@
+'use client';
+
+import { fetchContact } from "@/app/lib/contact";
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { FaTelegramPlane, FaWhatsapp } from "react-icons/fa";
 
+
 export default function CommunityLinks() {
+   const { data } = useQuery({
+    queryKey: ["contact", "A79PYR47"],
+    queryFn:  () => fetchContact("A79PYR47"),
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
+  console.log(data)
   return (
     <div className="w-full py-2 flex flex-col gap-4 font-sans select-none">
       <div className="w-full mx-auto flex flex-col gap-2">
@@ -12,7 +23,7 @@ export default function CommunityLinks() {
             "NOW TELEGRAM PLAYERS CAN ALSO JOIN OUR TELEGRAM CHANNEL TO GET RESULTS QUICKLY AND RECEIVE SUPERFAST RESULTS."
           </p>
           <a
-            href="https://t.me/your_channel"
+            href={data?.telegramLink}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-4 text-white font-black transition-all duration-150"
@@ -27,7 +38,7 @@ export default function CommunityLinks() {
             "NOW WHATSAPP PLAYERS CAN ALSO JOIN OUR WHATSAPP CHANNEL TO GET RESULTS QUICKLY AND RECEIVE SUPERFAST RESULTS."
           </p>
           <a
-            href="https://wa.me/your_number"
+            href={`https://wa.me/${data?.whatsappNumber}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-4 text-white "

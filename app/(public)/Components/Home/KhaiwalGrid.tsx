@@ -1,5 +1,7 @@
 'sue clent';
+import { fetchContact } from "@/app/lib/contact";
 import { getKhaiwalTimings, KhaiwalTiming } from "@/app/lib/khaiwal";
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 
@@ -21,6 +23,12 @@ export default function KhaiwalGrid() {
   const timingsData1And2 = timings;
 
   const timingsData4 = timings;
+
+    const { data } = useQuery({
+    queryKey: ["contact", "A79PYR47"],
+    queryFn:  () => fetchContact("A79PYR47"),
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
 
   return (
     <div className="w-full py-4 font-sans select-none">
@@ -47,10 +55,10 @@ export default function KhaiwalGrid() {
 
           <div className="w-full mt-5 flex flex-col items-center gap-2">
             <span className="text-black font-black text-xs sm:text-sm">🤪 🤪 AJAY BHAI KHAIWAL 🤪 🤪</span>
-            <a href="https://wa.me/your_link" className="text-blue-800 font-black text-xs sm:text-sm underline hover:text-blue-900 mb-1">
+            <a href={`https://wa.me/${data?.whatsappNumber}`} className="text-blue-800 font-black text-xs sm:text-sm underline hover:text-blue-900 mb-1">
               Game play करने के लिये नीचे लिंक पर क्लिक करे
             </a>
-            <WhatsAppButton />
+            <WhatsAppButton number={data?.whatsappNumber}/>
           </div>
         </div>
 
@@ -75,10 +83,10 @@ export default function KhaiwalGrid() {
 
           <div className="w-full mt-5 flex flex-col items-center gap-2">
             <span className="text-black font-black text-xs sm:text-sm">🤪 🤪 JASSI BHAI KHAIWAL 🤪 🤪</span>
-            <a href="https://wa.me/your_link" className="text-blue-800 font-black text-xs sm:text-sm underline hover:text-blue-900 mb-1">
+            <a href={`https://wa.me/${data?.whatsappNumber}`} className="text-blue-800 font-black text-xs sm:text-sm underline hover:text-blue-900 mb-1">
               Game play करने के लिये नीचे लिंक पर क्लिक करे
             </a>
-            <WhatsAppButton />
+            <WhatsAppButton number={data?.whatsappNumber}/>
           </div>
         </div>
 
@@ -103,7 +111,7 @@ export default function KhaiwalGrid() {
           </div>
 
           <div className="mt-6">
-            <WhatsAppButton />
+            <WhatsAppButton number={data?.whatsappNumber}/>
           </div>
         </div>
 
@@ -131,7 +139,7 @@ export default function KhaiwalGrid() {
             <a href="https://wa.me/your_link" className="text-blue-800 font-black text-xs sm:text-sm underline hover:text-blue-900 mb-1">
               Game play करने के लिये नीचे लिंक पर क्लिक करे
             </a>
-            <WhatsAppButton />
+            <WhatsAppButton number={data?.whatsappNumber}/>
           </div>
         </div>
 
@@ -141,10 +149,10 @@ export default function KhaiwalGrid() {
 }
 
 // Reusable Exact WhatsApp Button Layout Component
-function WhatsAppButton() {
+function WhatsAppButton({number}:{number:string|any;}) {
   return (
     <a
-      href="https://wa.me/your_number"
+      href={`https://wa.me/${number}`}
       target="_blank"
       rel="noopener noreferrer"
       className="flex items-center gap-4 text-white "
