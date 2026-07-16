@@ -3,6 +3,7 @@
  *
  * GET /api/data?range=daily            → today + yesterday per game
  * GET /api/data?range=weekly           → last 7 days per game
+ * GET /api/data?range=monthly          → MTD (Month-to-Date): 1st of current month to today (IST)
  * GET /api/data?range=yearly           → full year, month-wise per game
  * GET /api/data?range=yearly&year=2025 → specific year
  *
@@ -23,7 +24,7 @@ import {
 import { NextRequest, NextResponse } from "next/server";
 
 
-// ─── Shared helper ────────────────────────────────────────────────────────────
+// ─── Shared helpers ────────────────────────────────────────────────────────────
 
 function formatTime12(time24: string): string {
   if (!time24) return "";
@@ -54,9 +55,9 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const range = (searchParams.get("range") ?? "daily").toLowerCase();
 
-  if (!["daily", "weekly", "yearly"].includes(range)) {
+  if (!["daily", "weekly", "monthly", "yearly"].includes(range)) {
     return NextResponse.json(
-      { success: false, message: "Invalid range. Use: daily | weekly | yearly" },
+      { success: false, message: "Invalid range. Use: daily | weekly | monthly | yearly" },
       { status: 400 }
     );
   }
@@ -75,6 +76,7 @@ export async function GET(req: NextRequest) {
 
     if (range === "daily") return daily(games);
     if (range === "weekly") return weekly(games);
+    if (range === "monthly") return monthly(games);
 
     // yearly
     const year = parseInt(searchParams.get("year") ?? String(new Date().getFullYear()), 10);
@@ -95,13 +97,11 @@ export async function GET(req: NextRequest) {
 }
 
 // ─── Daily ────────────────────────────────────────────────────────────────────
-// Returns: [{ game, time, result: [yesterdayResult | null, todayResult | null] }]
-
 async function daily(games: any[]) {
   const todayStart = getISTMidnightUTC(0);
-  const todayEnd = new Date(getISTMidnightUTC(-1).getTime() - 1); // end of today IST
+  const todayEnd = new Date(getISTMidnightUTC(-1).getTime() - 1); 
   const yesterdayStart = getISTMidnightUTC(1);
-  const yesterdayEnd = new Date(todayStart.getTime() - 1); // end of yesterday IST
+  const yesterdayEnd = new Date(todayStart.getTime() - 1); 
 
   const [todayRows, yesterdayRows] = await Promise.all([
     Result.find({
@@ -131,8 +131,8 @@ async function daily(games: any[]) {
     return {
       game: game.name,
       time: formatTime12(game.resultTime),
-      tableNo:game.tableNo,
-      slug:game.slug,
+      tableNo: game.tableNo,
+      slug: game.slug,
       result: [
         yesterdayMap.get(id) ?? null,
         showTodayResult ? todayMap.get(id) ?? null : null,
@@ -144,12 +144,9 @@ async function daily(games: any[]) {
 }
 
 // ─── Weekly ───────────────────────────────────────────────────────────────────
-// Returns: [{ game, time, dates: ["YYYY-MM-DD", ...7], result: [r|null, ...7] }]
-// dates[0] = 6 days ago (IST), dates[6] = today (IST)
-
 async function weekly(games: any[]) {
-  const weekStart = getISTMidnightUTC(6);                        // 6 days ago IST midnight UTC
-  const weekEnd = new Date(getISTMidnightUTC(-1).getTime() - 1); // end of today IST
+  const weekStart = getISTMidnightUTC(6);                        
+  const weekEnd = new Date(getISTMidnightUTC(-1).getTime() - 1); 
 
   const rows = await Result.find({
     drawDate: { $gte: weekStart, $lte: weekEnd },
@@ -159,7 +156,6 @@ async function weekly(games: any[]) {
     .select("sattaId drawDate result")
     .lean();
 
-  // gameId → dateLabel → result
   const byGame = new Map<string, Map<string, string>>();
   for (const r of rows) {
     const id = r.sattaId.toString();
@@ -168,7 +164,6 @@ async function weekly(games: any[]) {
     byGame.get(id)!.set(label, r.result);
   }
 
-  // 7 date labels: [6 days ago, ..., today]
   const dateLabels = getISTDateLabels(7);
 
   const data = games.map((game) => {
@@ -181,10 +176,8 @@ async function weekly(games: any[]) {
       result: dateLabels.map((d) => {
         const todayLabel = utcToISTDateLabel(new Date());
 
-        // future dates
         if (d > todayLabel) return null;
 
-        // today's result only after game time
         if (d === todayLabel && !hasResultTimePassed(game.resultTime)) {
           return null;
         }
@@ -197,13 +190,69 @@ async function weekly(games: any[]) {
   return NextResponse.json({ success: true, range: "weekly", data });
 }
 
-// ─── Yearly ───────────────────────────────────────────────────────────────────
-// Returns:
-// [{
-//   game, time, year,
-//   months: { January: { 1: "42", 15: "07", ... }, February: { ... }, ... }
-// }]
+// ─── Monthly (Month-to-Date: 1st to Current Day) ──────────────────────────────
+async function monthly(games: any[]) {
+  const nowIST = new Date(
+    new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+  );
+  
+  const currentDay = nowIST.getDate(); // e.g., 16
 
+  // 1. Calculate how many days have passed since the 1st of the current month
+  // If it's the 16th, we need 16 labels. getISTDateLabels(N) returns [N-1 days ago ... today]
+  const totalDaysThisMonth = currentDay; 
+  const dateLabels = getISTDateLabels(totalDaysThisMonth);
+
+  // 2. Fetch records ranging from the 1st of the month till today's end
+  const monthStart = getISTMidnightUTC(totalDaysThisMonth - 1);
+  const monthEnd = new Date(getISTMidnightUTC(-1).getTime() - 1);
+
+  const rows = await Result.find({
+    drawDate: { $gte: monthStart, $lte: monthEnd },
+    status: "published",
+    isActive: true,
+  })
+    .select("sattaId drawDate result")
+    .lean();
+
+  const byGame = new Map<string, Map<string, string>>();
+  for (const r of rows) {
+    const id = r.sattaId.toString();
+    const label = utcToISTDateLabel(r.drawDate);
+    if (!byGame.has(id)) byGame.set(id, new Map());
+    byGame.get(id)!.set(label, r.result);
+  }
+
+  const todayLabel = utcToISTDateLabel(new Date());
+
+  const data = games.map((game) => {
+    const id = game._id.toString();
+    const dateMap = byGame.get(id) ?? new Map<string, string>();
+
+    return {
+      game: game.name,
+      time: formatTime12(game.resultTime),
+      tableNo: game.tableNo,
+      slug: game.slug,
+      dates: dateLabels,
+      result: dateLabels.map((d) => {
+        // Hide future dates just in case
+        if (d > todayLabel) return null;
+
+        // Hide today's result if the draw time hasn't passed yet
+        if (d === todayLabel && !hasResultTimePassed(game.resultTime)) {
+          return null;
+        }
+
+        return dateMap.get(d) ?? null;
+      }),
+    };
+  });
+
+  return NextResponse.json({ success: true, range: "monthly", data });
+}
+
+// ─── Yearly ───────────────────────────────────────────────────────────────────
 async function yearly(games: any[], year: number) {
   const { start, end } = getISTYearBoundsUTC(year);
 
@@ -214,10 +263,8 @@ async function yearly(games: any[], year: number) {
     .select("sattaId drawDate result")
     .lean();
 
-  // Pre-initialize map of gameId -> monthName -> day -> "-"
   const byGame = new Map<string, Record<string, Record<number, string>>>();
 
-  // Ensure every active game has all months and days initialized to "-"
   games.forEach((game) => {
     const id = game._id.toString();
     const initialMonths: Record<string, Record<number, string>> = {};
@@ -230,13 +277,11 @@ async function yearly(games: any[], year: number) {
     byGame.set(id, initialMonths);
   });
 
-  // Populate actual database results
   for (const r of rows) {
     const id = r.sattaId.toString();
     const gameEntry = byGame.get(id);
-    if (!gameEntry) continue; // skip if game is not active
+    if (!gameEntry) continue; 
 
-    // Convert UTC drawDate to IST to read correct IST month and day
     const istDate = new Date(r.drawDate.getTime() + 5.5 * 60 * 60 * 1000);
     const monthName = MONTHS[istDate.getUTCMonth()];
     const day = istDate.getUTCDate();
@@ -246,7 +291,6 @@ async function yearly(games: any[], year: number) {
     }
   }
 
-  // Get current IST time details to clear today's/future results
   const nowIST = new Date(
     new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
   );
@@ -258,25 +302,21 @@ async function yearly(games: any[], year: number) {
 
   const data = games.map((game) => {
     const id = game._id.toString();
-    const months = byGame.get(id)!; // guaranteed to exist since we initialized it
+    const months = byGame.get(id)!; 
 
-    // If querying the current year, enforce current day and future restrictions
     if (year === currentYear) {
-      // 1. Check if today's result time has passed. If not, today's result must be "-"
       if (!hasResultTimePassed(game.resultTime)) {
         if (months[currentMonthName]) {
           months[currentMonthName][currentDay] = "-";
         }
       }
 
-      // 2. Future days of the current month must be "-"
       for (let d = currentDay + 1; d <= 31; d++) {
         if (months[currentMonthName]) {
           months[currentMonthName][d] = "-";
         }
       }
 
-      // 3. All future months must be "-"
       for (let mIdx = currentMonthIdx + 1; mIdx < 12; mIdx++) {
         const futureMonthName = MONTHS[mIdx];
         for (let d = 1; d <= 31; d++) {
