@@ -1,3 +1,6 @@
+'use client'
+import { fetchDailyData } from "@/app/lib/results";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import React from "react";
 
@@ -36,16 +39,22 @@ export default function SattaChartLinksGrid() {
         { name: "UDAIPUR CITY SATTA KING CHART 2026", isActive: false },
     ];
 
+    const { data: satta = [], isLoading, error } = useQuery({
+        queryKey: ["satta", "daily"],
+        queryFn: fetchDailyData,
+        staleTime: 1000 * 60 * 5, // 5 minutes
+    });
+
     return (
         <div className="w-full bg-white pb-8 font-sans select-none">
 
-<div className="bg-black py-6">
-    <p className="text-base sm:text-lg text-center text-white">
-A7satta provides all kind of satta king results everyday.
+            <div className="bg-black py-6">
+                <p className="text-base sm:text-lg text-center text-white">
+                    A7satta provides all kind of satta king results everyday.
 
-    </p>
+                </p>
 
-</div>
+            </div>
             {/* Top Main Heading Banner with exact Orange-Yellow Gradient */}
             <div className="w-full bg-gradient-to-b from-[#FFA500] to-[#FFD200] py-6 text-center border-b border-black/10 mb-5">
                 <h2 className="text-black font-semibold text-xl sm:text-2xl md:text-3xl tracking-wide uppercase">
@@ -55,10 +64,10 @@ A7satta provides all kind of satta king results everyday.
 
             {/* 3-Column Links Responsive Grid Container */}
             <div className="max-w-[98%] mx-auto grid grid-cols-1 md:grid-cols-3 gap-x-2 gap-y-2 px-2">
-                {charts.map((chart, idx) => (
+                {satta.map((chart: any, idx: number) => (
                     <Link
                         key={idx}
-                        href={`#${chart.name.toLowerCase().replace(/\s+/g, "-")}`}
+                        href={`/${chart.slug}`}
                         className="
         w-full py-3 px-4 rounded text-center font-semibold text-xs sm:text-sm tracking-tight uppercase transition-all duration-150 border border-black/10
         bg-[#FFD200] text-black
@@ -68,7 +77,7 @@ A7satta provides all kind of satta king results everyday.
         active:translate-y-[1px]
       "
                     >
-                        {chart.name}
+                        {chart.game} satta king chart 2026
                     </Link>
                 ))}
             </div>
