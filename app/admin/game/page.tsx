@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { ISatta } from "@/app/types/Satta";
-import { PlusCircle, Pencil, Trash2, Search, RefreshCw, Clock } from "lucide-react";
+import { PlusCircle, Pencil, Trash2, Search, RefreshCw, Clock, LayoutGrid } from "lucide-react";
 import Link from "next/link";
 
 function formatTime12(time24: string): string {
@@ -21,6 +21,10 @@ export default function GameListPage() {
   const [games, setGames] = useState<ISatta[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+
+  // Static View Filtering States: 'all' | '1' | '2'
+  const [selectedTableFilter, setSelectedTableFilter] = useState<"all" | "1" | "2">("all");
+
   const [deleteTarget, setDeleteTarget] = useState<ISatta | null>(null);
   const [deleting, setDeleting] = useState(false);
   const [toast, setToast] = useState<{ type: "success" | "error"; text: string } | null>(null);
@@ -64,10 +68,19 @@ export default function GameListPage() {
     }
   };
 
-  const filtered = games.filter((g) =>
-    g.name.toLowerCase().includes(search.toLowerCase()) ||
-    g.slug.toLowerCase().includes(search.toLowerCase())
-  );
+  // Static/Client-side multi-layer filter mapping over array data
+  const filtered = games.filter((g) => {
+    const matchesSearch =
+      g.name.toLowerCase().includes(search.toLowerCase()) ||
+      g.slug.toLowerCase().includes(search.toLowerCase());
+
+    if (selectedTableFilter === "all") {
+      return matchesSearch;
+    }
+
+    // Check tableNo matching criteria string representations safely
+    return matchesSearch && String(g.tableNo) === selectedTableFilter;
+  });
 
   return (
     <div className="space-y-6">
@@ -97,45 +110,79 @@ export default function GameListPage() {
           Add New Satta
         </Link>
       </div>
-
-      {/* Search + Refresh */}
-      <div className="flex gap-3">
-        <div className="relative flex-1 max-w-sm">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by name or slug..."
-            className="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-300 rounded-xl outline-none focus:border-[#e11d48] focus:ring-2 focus:ring-[#e11d48]/20"
-          />
-        </div>
-        <button
-          onClick={fetchGames}
-          className="p-2.5 rounded-xl border border-gray-300 hover:bg-gray-50 transition-colors text-gray-500"
-          title="Refresh"
-        >
-          <RefreshCw size={16} />
-        </button>
-      </div>
-
       {/* Stats bar */}
       <div className="flex gap-3 flex-wrap">
         <div className="bg-white rounded-xl border border-gray-200 px-4 py-2.5 text-sm">
-          <span className="text-gray-500">Total</span>{" "}
-          <span className="font-bold text-gray-800">{games.length}</span>
+          <span className="text-gray-500">Total Visible</span>{" "}
+          <span className="font-bold text-gray-800">{filtered.length}</span>
         </div>
         <div className="bg-white rounded-xl border border-gray-200 px-4 py-2.5 text-sm">
           <span className="text-gray-500">Active</span>{" "}
-          <span className="font-bold text-green-600">{games.filter((g) => g.isActive).length}</span>
+          <span className="font-bold text-green-600">{filtered.filter((g) => g.isActive).length}</span>
         </div>
         <div className="bg-white rounded-xl border border-gray-200 px-4 py-2.5 text-sm">
           <span className="text-gray-500">Inactive</span>{" "}
-          <span className="font-bold text-red-500">{games.filter((g) => !g.isActive).length}</span>
+          <span className="font-bold text-red-500">{filtered.filter((g) => !g.isActive).length}</span>
         </div>
       </div>
 
-      {/* Table */}
+      {/* Control Action Center: Search + Static Table Filter Selector + Refresh */}
+      <div className="flex flex-col md:flex-row gap-3 md:items-center justify-between">
+        <div className="flex flex-1 gap-3 max-w-xl">
+          <div className="relative flex-1 max-w-sm">
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search by name or slug..."
+              className="w-full pl-9 pr-4 py-2 text-sm border border-gray-300 rounded-xl outline-none focus:border-[#e11d48] focus:ring-2 focus:ring-[#e11d48]/20"
+            />
+          </div>
+          <button
+            onClick={fetchGames}
+            className="p-2 px-3 rounded-xl border border-gray-300 hover:bg-gray-50 transition-colors text-gray-500"
+            title="Refresh"
+          >
+            <RefreshCw size={16} />
+          </button>
+        </div>
+
+        {/* Static Segmented Controls Tabs for quick Client-Side filtration */}
+        <div className="flex bg-gray-100 p-1 rounded-xl self-start md:self-auto border border-gray-200">
+          <button
+            onClick={() => setSelectedTableFilter("all")}
+            className={`px-3 py-2 text-xs font-semibold rounded-lg transition-all ${selectedTableFilter === "all"
+                ? "bg-white text-gray-800 shadow-sm"
+                : "text-gray-500 hover:text-gray-800"
+              }`}
+          >
+            All Tables
+          </button>
+          <button
+            onClick={() => setSelectedTableFilter("1")}
+            className={`px-3 py-2 text-xs font-semibold rounded-lg transition-all ${selectedTableFilter === "1"
+                ? "bg-white text-gray-800 shadow-sm"
+                : "text-gray-500 hover:text-gray-800"
+              }`}
+          >
+            Table 1
+          </button>
+          <button
+            onClick={() => setSelectedTableFilter("2")}
+            className={`px-3 py-2 text-xs font-semibold rounded-lg transition-all ${selectedTableFilter === "2"
+                ? "bg-white text-gray-800 shadow-sm"
+                : "text-gray-500 hover:text-gray-800"
+              }`}
+          >
+            Table 2
+          </button>
+        </div>
+      </div>
+
+
+
+      {/* Table View Layout */}
       <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
         {loading ? (
           <div className="py-16 flex flex-col items-center gap-3 text-gray-400">
@@ -148,7 +195,11 @@ export default function GameListPage() {
         ) : filtered.length === 0 ? (
           <div className="py-16 text-center text-gray-400">
             <p className="text-lg font-medium">No games found</p>
-            <p className="text-sm mt-1">{search ? "Try a different search term." : "Add your first satta game."}</p>
+            <p className="text-sm mt-1">
+              {search || selectedTableFilter !== "all"
+                ? "Try adjusting your filters or query parameters."
+                : "Add your first satta game."}
+            </p>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -161,7 +212,7 @@ export default function GameListPage() {
                   <th className="px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                     <div className="flex items-center gap-1"><Clock size={12} /> Result Time (IST)</div>
                   </th>
-                  <th className="px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Table</th>
+                  <th className="px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Table Assignment</th>
                   <th className="px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
                   <th className="px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Created</th>
                   <th className="px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Actions</th>
@@ -172,7 +223,7 @@ export default function GameListPage() {
                   <tr key={game._id} className="hover:bg-gray-50/70 transition-colors">
                     <td className="px-5 py-4 text-gray-400 text-xs">{idx + 1}</td>
                     <td className="px-5 py-4">
-                      <p className="font-semibold text-gray-800">{game.name}</p>
+                      <p className="font-semibold text-gray-800 capitalize">{game.name}</p>
                     </td>
                     <td className="px-5 py-4">
                       <code className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-md font-mono">
@@ -184,14 +235,15 @@ export default function GameListPage() {
                         {formatTime12(game.resultTime)}
                       </span>
                     </td>
-                    <td className="px-5 py-4 flex justify-center">
-                      <code className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-md font-mono">{game.tableNo?"Table "+game.tableNo:"-"}</code>
+                    <td className="px-5 py-4">
+                      <span className="inline-flex items-center gap-1 text-xs bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg font-medium border border-slate-200">
+                        <LayoutGrid size={12} className="text-slate-400" />
+                        {game.tableNo ? `Table ${game.tableNo}` : "Not Assigned"}
+                      </span>
                     </td>
                     <td className="px-5 py-4">
                       <span
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${game.isActive
-                            ? "bg-green-100 text-green-700"
-                            : "bg-gray-100 text-gray-500"
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${game.isActive ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"
                           }`}
                       >
                         <span
@@ -246,8 +298,8 @@ export default function GameListPage() {
             </div>
             <p className="text-sm text-gray-600 bg-gray-50 rounded-xl p-3">
               You are about to delete{" "}
-              <span className="font-bold text-gray-800">"{deleteTarget.name}"</span>.
-              All associated results may be affected.
+              <span className="font-bold text-gray-800">"{deleteTarget.name}"</span>. All associated
+              results may be affected.
             </p>
             <div className="flex gap-3">
               <button
@@ -263,8 +315,16 @@ export default function GameListPage() {
                 className="flex-1 py-2.5 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 rounded-xl transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
               >
                 {deleting ? (
-                  <><svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" /></svg> Deleting...</>
-                ) : "Yes, Delete"}
+                  <>
+                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                    </svg>{" "}
+                    Deleting...
+                  </>
+                ) : (
+                  "Yes, Delete"
+                )}
               </button>
             </div>
           </div>
