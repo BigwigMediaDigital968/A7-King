@@ -9,7 +9,7 @@ const API_URL =
 const apiData = {
   api_key: "kLmqLQFPNH88",
   domain_key: "iIDyhh3REFs5g4Yx",
-  domain: "https://a7-king.vercel.app",
+  domain: "a7-king.vercel.app",
 };
 
 // Global cache
